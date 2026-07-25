@@ -1,0 +1,13 @@
+/* A Thousand And One — layout & rhythm tokens. */
+:root {
+  --measure: 640px;         /* reading column */
+  --measure-wide: 860px;    /* breakout figures */
+  --sidenote-width: 195px;
+  --sidenote-gap: 60px;     /* gap between column edge and sidenote */
+  --sidenote-gutter: 300px; /* right margin the article column reserves for notes */
+  --space-para: 26px;       /* paragraph rhythm */
+  --space-block: 52px;      /* pull quotes, figures */
+  --space-section: 64px;    /* before h2 */
+  --space-ornament: 60px;   /* around the ··· section break */
+  --page-pad: 88px;
+}

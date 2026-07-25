@@ -1,0 +1,44 @@
+/* A Thousand And One — colour tokens.
+   Warm neutrals throughout; one accent ("rubric" red, after manuscript rubrication). */
+:root {
+  /* base palette */
+  --paper: #fefbf8;        /* primary background */
+  --ink: #17130e;          /* headings, strong rules, the black of the ident */
+  --ink-body: #221c14;     /* long-form body text */
+  --ink-muted: #57503f;    /* excerpts, standfirsts, footnotes */
+  --ink-faint: #7a7166;    /* metadata, captions, nav at rest */
+  --ink-ghost: #b0a89c;    /* placeholders, disabled, folios */
+  --rubric: oklch(0.48 0.13 29);  /* links, tags, kickers — use sparingly */
+  --wash: #f7f2ea;         /* recessed surfaces: code blocks, inline code */
+  --desk: #f1ece4;         /* off-canvas chrome, canvas behind pages */
+  --hairline: rgba(23, 19, 14, 0.12);
+  --hairline-strong: rgba(23, 19, 14, 0.25);
+
+  /* semantic aliases */
+  --surface-page: var(--paper);
+  --surface-code: var(--wash);
+  --text-heading: var(--ink);
+  --text-body: var(--ink-body);
+  --text-secondary: var(--ink-muted);
+  --text-meta: var(--ink-faint);
+  --text-ghost: var(--ink-ghost);
+  --link: var(--rubric);
+  --link-hover: var(--ink);
+  --tag: var(--rubric);
+  --rule: var(--ink);
+}
+
+/* Night theme. Default is light; toggle sets data-theme="dark" on <html>. */
+[data-theme="dark"] {
+  --paper: #161210;
+  --ink: #f2ebe1;
+  --ink-body: #e6ddd0;
+  --ink-muted: #b3a996;
+  --ink-faint: #8f8676;
+  --ink-ghost: #5e574b;
+  --rubric: oklch(0.68 0.11 33);
+  --wash: #1f1a15;
+  --desk: #100d0b;
+  --hairline: rgba(242, 235, 225, 0.14);
+  --hairline-strong: rgba(242, 235, 225, 0.32);
+}

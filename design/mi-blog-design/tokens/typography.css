@@ -1,0 +1,43 @@
+/* A Thousand And One — type tokens.
+   Cormorant Garamond (logotype family) for display; EB Garamond for long-form
+   reading (a sturdier Garamond at text sizes); IBM Plex Mono for the "apparatus":
+   metadata, captions, tags, labels, code. */
+:root {
+  --font-display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* scale */
+  --size-hero: 62px;        /* featured title on index */
+  --size-title: 58px;       /* article title */
+  --size-h2: 34px;          /* article section heading */
+  --size-entry: 33px;       /* index entry title */
+  --size-pull: 32px;        /* pull quote */
+  --size-standfirst: 24px;  /* article subtitle, italic */
+  --size-prevnext: 24px;
+  --size-summary: 21px;     /* details/summary, italic */
+  --size-body: 19.5px;
+  --size-list: 18.5px;
+  --size-excerpt: 17px;
+  --size-footnote: 15px;
+  --size-sidenote: 14px;
+  --size-code: 13.5px;
+  --size-caption: 11px;     /* figcaption, mono */
+  --size-nav: 11px;
+  --size-meta: 10.5px;      /* bylines, datelines, labels */
+  --size-tag: 10px;
+
+  /* leading */
+  --leading-display: 1.04;
+  --leading-heading: 1.15;
+  --leading-body: 1.68;
+  --leading-tight: 1.5;
+
+  /* mono tracking (always with uppercase) */
+  --track-meta: 0.18em;
+  --track-nav: 0.2em;
+  --track-label: 0.22em;
+
+  /* weights: display+body use 400/500 only; mono 400, 500 for emphasis */
+  --weight-display: 500;
+}

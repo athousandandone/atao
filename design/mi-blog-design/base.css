@@ -1,0 +1,12 @@
+/* Page scaffold + link defaults. */
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); }
+::selection { background: var(--wash); color: var(--ink); }
+[data-theme="dark"] img.ident { filter: invert(0.92) hue-rotate(180deg); }
