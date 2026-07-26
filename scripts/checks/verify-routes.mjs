@@ -3,9 +3,13 @@
 // 1. Every expected route's file is present in dist/ (manifest below, grown
 //    per slice) and non-empty.
 // 2. No server or dynamic output exists (static output only).
-// 3. Internal links and asset references in every HTML file resolve to a
-//    file in dist/ (trailing-slash URLs resolve to index.html). External
-//    origins, fragments and non-fetching schemes are out of scope here.
+// 3. Internal links and asset references in every HTML file (href, src,
+//    srcset and friends) resolve to a file in dist/ (trailing-slash URLs
+//    resolve to index.html). References that traverse outside dist/ fail
+//    outright — the served site cannot reach above its root, so such a
+//    reference is broken even if a repository file happens to sit at the
+//    escaped path. External origins, fragments and non-fetching schemes
+//    are out of scope here.
 
 import {
   DIST,
@@ -16,6 +20,7 @@ import {
   parseHtmlFile,
   readText,
   runAsMain,
+  srcsetUrls,
   textLines,
   walkNodes,
 } from './lib.mjs';
@@ -58,23 +63,38 @@ export async function check() {
     for (const node of walkNodes(parseHtmlFile(path))) {
       if (!isElement(node)) continue;
       for (const attr of node.attrs ?? []) {
-        if (!URL_ATTRS.includes(attr.name.toLowerCase())) continue;
-        const url = attr.value.trim();
-        if (url === '' || SKIP_URL.test(url)) continue;
-        let target = resolveTarget(url, file);
-        if (target === null) continue;
-        // A directory target without a trailing slash still serves its index.
-        if (existsSync(join(DIST, target)) && statSync(join(DIST, target)).isDirectory()) {
-          target = posix.join(target, 'index.html');
-        }
-        if (!existsSync(join(DIST, target))) {
-          violations.push({
-            file: path,
-            line: nodeLine(node),
-            pattern: `unresolved internal reference (${attr.name}="${url}" → ${target})`,
-            excerpt: excerptAt(lines, nodeLine(node)),
-            hint: 'every internal link and asset reference must resolve within dist/.',
-          });
+        const name = attr.name.toLowerCase();
+        let urls;
+        if (URL_ATTRS.includes(name)) urls = [attr.value.trim()];
+        else if (name === 'srcset' || name === 'imagesrcset') urls = srcsetUrls(attr.value);
+        else continue;
+        for (const url of urls) {
+          if (url === '' || SKIP_URL.test(url)) continue;
+          let target = resolveTarget(url, file);
+          if (target === null) continue;
+          if (target === '..' || target.startsWith('../')) {
+            violations.push({
+              file: path,
+              line: nodeLine(node),
+              pattern: `reference escapes the site root (${name}="${url}")`,
+              excerpt: excerptAt(lines, nodeLine(node)),
+              hint: 'the served site cannot reach above dist/; the reference is broken regardless of what exists at the escaped path.',
+            });
+            continue;
+          }
+          // A directory target without a trailing slash still serves its index.
+          if (existsSync(join(DIST, target)) && statSync(join(DIST, target)).isDirectory()) {
+            target = posix.join(target, 'index.html');
+          }
+          if (!existsSync(join(DIST, target))) {
+            violations.push({
+              file: path,
+              line: nodeLine(node),
+              pattern: `unresolved internal reference (${name}="${url}" → ${target})`,
+              excerpt: excerptAt(lines, nodeLine(node)),
+              hint: 'every internal link and asset reference must resolve within dist/.',
+            });
+          }
         }
       }
     }

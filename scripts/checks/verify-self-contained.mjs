@@ -7,20 +7,29 @@
 // fonts.googleapis/gstatic, unpkg.com, any external origin).
 //
 // Anchor navigation links (<a href>) are exempt: they are navigation, not
-// resource loads. Whether publication media (article images, embedded media)
-// must always be hosted locally is a separate, later editorial decision —
-// external media resources are therefore reported as ADVISORY, not failure;
-// the prohibition is confirmed policy for application resources only.
+// resource loads. <link> elements are classified by rel, because the policy
+// governs resource LOADS: loading rels (stylesheet, preload, icon, manifest,
+// preconnect and kin) are application resources and fail when external;
+// metadata rels (canonical, alternate, author, licence and kin) load nothing
+// — they are expected to carry absolute canonical URLs from Slice 5 onwards
+// and are exempt; an unrecognised rel with an external href is reported as
+// ADVISORY so nothing slips through silently. Whether publication media
+// (article images, embedded media) must always be hosted locally is a
+// separate, later editorial decision — external media resources are likewise
+// reported as ADVISORY, not failure; the prohibition is confirmed policy for
+// application resources only.
 
 import {
   DIST,
   excerptAt,
+  getAttr,
   isElement,
   listFiles,
   nodeLine,
   parseHtmlFile,
   readText,
   runAsMain,
+  srcsetUrls,
   textLines,
   walkNodes,
 } from './lib.mjs';
@@ -29,13 +38,23 @@ const EXTERNAL = /^(https?:)?\/\//i;
 
 // element → attributes that load resources, with their policy class
 const APPLICATION = {
-  link: ['href'],
   script: ['src'],
   iframe: ['src'],
   embed: ['src'],
   object: ['data'],
   use: ['href', 'xlink:href'],
 };
+// <link> rels that fetch (or exist to enable fetching) — application resources.
+const LINK_LOADING_RELS = new Set([
+  'stylesheet', 'preload', 'modulepreload', 'prefetch', 'prerender',
+  'icon', 'apple-touch-icon', 'apple-touch-startup-image', 'mask-icon',
+  'manifest', 'preconnect', 'dns-prefetch',
+]);
+// <link> rels that are pure metadata — no fetch; exempt like <a href>.
+const LINK_METADATA_RELS = new Set([
+  'canonical', 'alternate', 'author', 'license', 'help',
+  'next', 'prev', 'search', 'me', 'shortcut',
+]);
 const MEDIA = {
   img: ['src', 'srcset'],
   source: ['src', 'srcset'],
@@ -43,10 +62,6 @@ const MEDIA = {
   audio: ['src'],
   track: ['src'],
 };
-
-function srcsetUrls(value) {
-  return value.split(',').map((part) => part.trim().split(/\s+/)[0]).filter(Boolean);
-}
 
 function attrUrls(name, value) {
   return name.startsWith('srcset') ? srcsetUrls(value) : [value.trim()];
@@ -94,6 +109,21 @@ function scanHtml(path, violations, advisories) {
 
     for (const attr of node.attrs ?? []) {
       const name = attr.name.toLowerCase();
+      if (tag === 'link' && name === 'href') {
+        const rels = (getAttr(node, 'rel') ?? '').toLowerCase().split(/\s+/).filter(Boolean);
+        for (const url of attrUrls(name, attr.value)) {
+          if (!EXTERNAL.test(url)) continue;
+          if (rels.some((r) => LINK_LOADING_RELS.has(r))) {
+            violations.push(finding(node, `third-party application resource (<link rel="${rels.join(' ')}" href="${url}">)`,
+              'application resources must be self-hosted; serve it from this origin or remove it.'));
+          } else if (rels.length > 0 && rels.every((r) => LINK_METADATA_RELS.has(r))) {
+            // metadata only — no fetch; exempt (e.g. canonical, alternate).
+          } else {
+            advisories.push(finding(node, `external href on unrecognised link rel="${rels.join(' ')}" — advisory`,
+              'not a known loading rel, so not failed — but review it; a genuinely loading rel belongs in LINK_LOADING_RELS.'));
+          }
+        }
+      }
       if ((APPLICATION[tag] ?? []).includes(name)) {
         for (const url of attrUrls(name, attr.value)) {
           if (EXTERNAL.test(url)) {
