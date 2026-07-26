@@ -1,8 +1,10 @@
+<!-- @format -->
+
 # A Thousand And One — Design System
 
-Editorial identity and CSS design system for **athousandandone.co.uk** — a blog by Oliver Matthews exploring the idea that *everything is product*: software, AI, engineering, food, travel, literature, design, art, music.
+Editorial identity and CSS design system for **athousandandone.co.uk** — a blog by Oliver Matthews exploring the idea that _everything is product_: software, AI, engineering, food, travel, literature, design, art, music.
 
-**MI** is the brand device: 1001 in roman numerals. It is an *identifier*, not a logo — favicon, avatars, watermark, footer mark, end-of-article mark. The primary identity is always the **A Thousand And One** wordmark (set in Cormorant Garamond, with a swash A).
+**MI** is the brand device: 1001 in roman numerals. It is an _identifier_, not a logo — favicon, avatars, watermark, footer mark, end-of-article mark. The primary identity is always the **A Thousand And One** wordmark (set in Cormorant Garamond, with a swash A).
 
 Sources: site at http://athousandandone.co.uk (currently a holding page with the wordmark); ident files supplied by the owner (`assets/wordmark.png`, `assets/mi.svg`, `assets/mi-reverse.svg`). A fully vectorised wordmark is pending from the owner — `assets/wordmark.svg` is missing its swash A; prefer `wordmark.png` until then.
 
@@ -10,7 +12,7 @@ Reference designs: `Blog Explorations.dc.html` — option **2a** (index) and **2
 
 ## Positioning
 
-A publication first, a website second. Think *The Gentleman's Journal* × *Delayed Gratification* × Craig Mod: reading over navigation, typography over decoration, longevity over trends. Calm, confident, understated.
+A publication first, a website second. Think _The Gentleman's Journal_ × _Delayed Gratification_ × Craig Mod: reading over navigation, typography over decoration, longevity over trends. Calm, confident, understated.
 
 ## Content fundamentals
 
@@ -23,7 +25,7 @@ A publication first, a website second. Think *The Gentleman's Journal* × *Delay
 
 ## Visual foundations
 
-- **Colour**: warm paper (#fefbf8) and warm ink (#17130e). One accent — "rubric" red (oklch 0.48 0.13 29), after manuscript rubrication — reserved for links, tags, kickers. Never backgrounds. Dark theme via `[data-theme="dark"]` on `<html>`; default light; toggle glyph ☾.
+- **Colour**: warm paper (#fefbf8) and warm ink (#17130e). One accent — "rubric" red (oklch 0.48 0.13 29), after manuscript rubrication — reserved for links, tags, kickers. Never backgrounds.
 - **Type**: Cormorant Garamond (display, matches logotype), EB Garamond (body — sturdier at reading sizes), IBM Plex Mono (apparatus: metadata, captions, tags, code). Weights 400/500 only. Full scale in `tokens/typography.css`.
 - **Rules do the decorating**: hairlines (12% ink), strong rules (solid ink), twin hairlines, double rules, dotted leaders. No shadows, no rounded corners, no gradients.
 - **Layout**: 640px reading measure; sidenotes hang in a 300px right gutter (column sits left of centre); 860px breakout figures. Generous rhythm: 26px paragraphs, 64px sections.

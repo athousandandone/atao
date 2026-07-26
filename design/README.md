@@ -2,7 +2,7 @@
 
 # Design
 
-This directory contains the enduring design direction for the **A Thousand And One** website and the **MI** publication.
+This directory contains the enduring design direction for the **A Thousand And One** website.
 
 It exists to capture the principles behind the visual language rather than implementation details. The objective is to preserve _why_ design decisions were made, allowing the implementation to evolve without losing its editorial identity.
 
