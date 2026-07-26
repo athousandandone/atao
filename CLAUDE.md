@@ -8,6 +8,13 @@ This repository contains the source for the **A Thousand And One** website.
 
 Read the repository before proposing changes.
 
+## Operating Rules
+
+Concise always-on reminders live in `.claude/rules/`:
+
+- `.claude/rules/00-working-agreement.md`
+- `.claude/rules/01-git-workflow.md`
+
 ## Identity
 
 - Use British English.
