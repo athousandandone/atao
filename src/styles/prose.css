@@ -213,20 +213,20 @@
    label, so that h2 is deliberately styled visible; no global .sr-only
    hiding utility is defined (a decision recorded in the slice PR).
    D5: the top rule is the rendered 0.2, not --hairline-strong (0.25). */
-.footnotes {
+.prose .footnotes {
   margin-top: 56px; padding-top: 24px;
   border-top: 1px solid rgba(23, 19, 14, 0.2); /* D5 */
 }
-.footnotes h2, .footnotes h3 {
+.prose .footnotes h2, .prose .footnotes h3 {
   margin: 0;
   font: 500 var(--size-meta) / 1.4 var(--font-mono);
   letter-spacing: var(--track-label); text-transform: uppercase;
   color: var(--text-meta);
 }
-.footnotes ol {
+.prose .footnotes ol {
   margin: 16px 0 0; padding-left: 22px;
   font-size: var(--size-footnote); line-height: 1.55; color: var(--text-secondary);
 }
-.footnotes li { padding-left: 6px; }
-.footnotes li + li { margin-top: 10px; }
-.footnotes a { font-family: var(--font-mono); font-size: 12px; }
+.prose .footnotes li { padding-left: 6px; }
+.prose .footnotes li + li { margin-top: 10px; }
+.prose .footnotes a { font-family: var(--font-mono); font-size: 12px; }
