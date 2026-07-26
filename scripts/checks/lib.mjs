@@ -59,6 +59,11 @@ export function nodeLine(node) {
   return node.sourceCodeLocation?.startLine ?? 0;
 }
 
+/** URLs from a srcset-style attribute value (each candidate's first token). */
+export function srcsetUrls(value) {
+  return value.split(',').map((part) => part.trim().split(/\s+/)[0]).filter(Boolean);
+}
+
 /**
  * A violation: { file, line, pattern, excerpt, hint }.
  * Prints in the agreed format: path:line — pattern — excerpt, plus a hint.
