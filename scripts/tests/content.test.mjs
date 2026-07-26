@@ -37,8 +37,30 @@ test('schema rejects empty standfirst', () => {
   assert.equal(blogSchema.safeParse({ ...valid, standfirst: '' }).success, false);
 });
 
+test('schema accepts a Date instance (unquoted YAML timestamp)', () => {
+  const parsed = blogSchema.parse({ ...valid, date: new Date('2026-07-24T00:00:00Z') });
+  assert.equal(parsed.date.toISOString().slice(0, 10), '2026-07-24');
+});
+
 test('schema rejects an unparseable date', () => {
   assert.equal(blogSchema.safeParse({ ...valid, date: 'not-a-date' }).success, false);
+});
+
+test('schema rejects date strings not in exact YYYY-MM-DD form', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, date: '24/07/2026' }).success, false);
+  assert.equal(blogSchema.safeParse({ ...valid, date: 'July 24, 2026' }).success, false);
+  assert.equal(blogSchema.safeParse({ ...valid, date: '2026-7-4' }).success, false);
+  assert.equal(blogSchema.safeParse({ ...valid, date: 1753000000000 }).success, false);
+});
+
+test('schema rejects impossible calendar dates authored as strings', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, date: '2026-02-30' }).success, false);
+  assert.equal(blogSchema.safeParse({ ...valid, date: '2026-13-01' }).success, false);
+});
+
+test('string dates parse as UTC midnight, immune to build-machine time zone', () => {
+  const parsed = blogSchema.parse(valid);
+  assert.equal(parsed.date.toISOString(), '2026-07-24T00:00:00.000Z');
 });
 
 test('schema rejects non-string tags and empty tag strings', () => {
