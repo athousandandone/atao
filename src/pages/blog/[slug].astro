@@ -1,0 +1,23 @@
+---
+// /blog/[slug]/ — one route per publishable entry; entry.id is the slug
+// (filename). Paths derive from the structural access helper, so drafts
+// and (in production) future-dated entries never route.
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getPublishedEntries } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries();
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ArticleLayout data={entry.data}>
+  <Content />
+</ArticleLayout>

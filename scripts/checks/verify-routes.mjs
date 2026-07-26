@@ -27,8 +27,14 @@ import {
 import { existsSync, statSync } from 'node:fs';
 import { join, posix } from 'node:path';
 
-// Expected routes, grown per slice. Slice 1: homepage and 404 only.
-const EXPECTED = ['index.html', '404.html'];
+// Expected routes, grown per slice. Slice 1: homepage and 404.
+// Slice 2: blog index and the fixture article route.
+const EXPECTED = [
+  'index.html',
+  '404.html',
+  'blog/index.html',
+  'blog/the-sourdough-loop/index.html',
+];
 
 const SKIP_URL = /^(https?:)?\/\/|^(mailto|tel|data|javascript):|^#/i;
 const URL_ATTRS = ['href', 'src', 'poster', 'data'];

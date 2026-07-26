@@ -1,0 +1,34 @@
+---
+// /blog/ — entrance and index. Unstyled semantic list until Slice 4
+// implements design 2a. Entries come only through the structural access
+// helper, never getCollection directly.
+import BlogShell from '../../layouts/BlogShell.astro';
+import { getPublishedEntries } from '../../lib/content';
+
+const entries = await getPublishedEntries();
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<BlogShell title="A Thousand And One">
+  <h1>A Thousand And One</h1>
+  <ul>
+    {
+      entries.map((entry) => (
+        <li>
+          <a href={`/blog/${entry.id}/`}>{entry.data.title}</a>
+          <p>{entry.data.standfirst}</p>
+          <p>
+            <time datetime={entry.data.date.toISOString().slice(0, 10)}>
+              {dateFormat.format(entry.data.date)}
+            </time>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</BlogShell>
