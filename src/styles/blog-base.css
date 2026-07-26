@@ -1,0 +1,43 @@
+/* Blog page scaffold: body, links, selection. Imported only by blog
+   layouts — the homepage links /app.css alone and blog styles must never
+   reach it. The export's dark-theme rule and dead img.ident filter are
+   reconciled out (no dark mode). */
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+::selection {
+  background: var(--wash);
+  color: var(--ink);
+}
+
+/* The publication uses weights 400/500 only; browsers must not synthesise
+   a 700 on unstyled headings or strong text. Specific treatments in
+   prose.css and (from Slice 4) components.css override as designed. */
+h1, h2, h3, h4, h5, h6, b, strong {
+  font-weight: 500;
+}
+
+/* Provisional scaffold so the typography review reads comfortably; page
+   composition (article gutters, sidenote room, chrome) is Slice 4 work. */
+main {
+  padding: 48px 24px 96px;
+}
+main > .prose,
+main > article {
+  margin-inline: auto;
+  max-width: var(--measure);
+}
