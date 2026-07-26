@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "node --test scripts/tests/*.test.mjs",
     "verify": "node scripts/checks/run.mjs",
     "verify:js": "node scripts/checks/verify-js.mjs",
     "verify:self-contained": "node scripts/checks/verify-self-contained.mjs",
