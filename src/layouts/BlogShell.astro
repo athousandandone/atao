@@ -1,0 +1,27 @@
+---
+// Minimal blog shell: document skeleton and landmarks only. The approved
+// design (2a masthead, nav, footer) arrives in Slice 4; nothing here is
+// presentation. Blog-internal links are root-absolute with trailing slashes.
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <p><a href="/blog/">A Thousand And One</a></p>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

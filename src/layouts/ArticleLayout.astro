@@ -1,0 +1,31 @@
+---
+// Article skeleton: semantic structure for the 2b reading experience,
+// unstyled until Slices 3–4. Dates are civil and displayed en-GB; the
+// UTC time zone pins the coerced YYYY-MM-DD date against local-zone drift.
+import BlogShell from './BlogShell.astro';
+import type { BlogData } from '../lib/schema';
+
+interface Props {
+  data: BlogData;
+}
+
+const { data } = Astro.props;
+const isoDate = data.date.toISOString().slice(0, 10);
+const displayDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(data.date);
+---
+
+<BlogShell title={`${data.title} — A Thousand And One`}>
+  <article>
+    <header>
+      <h1>{data.title}</h1>
+      <p>{data.standfirst}</p>
+      <p><time datetime={isoDate}>{displayDate}</time></p>
+    </header>
+    <slot />
+  </article>
+</BlogShell>

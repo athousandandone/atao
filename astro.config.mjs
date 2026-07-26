@@ -10,4 +10,9 @@ export default defineConfig({
   // structurally comparable to the hand-authored site/index.html, and so
   // generated markup stays inspectable line by line.
   compressHTML: false,
+  markdown: {
+    // Monochrome code is the design; no highlighting markup is emitted.
+    // Build-time Shiki remains possible later, still zero-JS (§17).
+    syntaxHighlight: false,
+  },
 });

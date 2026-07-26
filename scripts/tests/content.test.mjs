@@ -1,0 +1,84 @@
+// Helper tests (§12): content-model logic is tested here, directly —
+// not by planting bad fixtures in the canonical collection and not by
+// scanning dist/. Run: node --test scripts/tests/*.test.mjs
+// (Node ≥ 22.18 strips the .ts modules' types natively.)
+
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { blogSchema } from '../../src/lib/schema.ts';
+import { compareEntries, isPublished } from '../../src/lib/publish.ts';
+
+const valid = {
+  title: 'The Sourdough Loop',
+  standfirst: 'What a jar of flour and water teaches.',
+  date: '2026-07-24',
+};
+
+test('schema accepts minimal valid frontmatter and applies defaults', () => {
+  const parsed = blogSchema.parse(valid);
+  assert.equal(parsed.title, 'The Sourdough Loop');
+  assert.ok(parsed.date instanceof Date);
+  assert.equal(parsed.date.toISOString().slice(0, 10), '2026-07-24');
+  assert.equal(parsed.draft, false); // default applied
+  assert.equal(parsed.tags, undefined); // genuinely optional
+});
+
+test('schema accepts optional tags with display case preserved', () => {
+  const parsed = blogSchema.parse({ ...valid, tags: ['Food'] });
+  assert.deepEqual(parsed.tags, ['Food']);
+});
+
+test('schema rejects missing title', () => {
+  const { title, ...rest } = valid;
+  assert.equal(blogSchema.safeParse(rest).success, false);
+});
+
+test('schema rejects empty standfirst', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, standfirst: '' }).success, false);
+});
+
+test('schema rejects an unparseable date', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, date: 'not-a-date' }).success, false);
+});
+
+test('schema rejects non-string tags and empty tag strings', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, tags: [7] }).success, false);
+  assert.equal(blogSchema.safeParse({ ...valid, tags: [''] }).success, false);
+});
+
+test('schema rejects a non-boolean draft flag', () => {
+  assert.equal(blogSchema.safeParse({ ...valid, draft: 'yes' }).success, false);
+});
+
+const now = new Date('2026-07-26T12:00:00Z');
+const past = { date: new Date('2026-07-24T00:00:00Z'), draft: false };
+const future = { date: new Date('2026-08-01T00:00:00Z'), draft: false };
+
+test('drafts are never published, in any mode', () => {
+  assert.equal(isPublished({ ...past, draft: true }, now, true), false);
+  assert.equal(isPublished({ ...past, draft: true }, now, false), false);
+});
+
+test('future-dated entries are excluded from production builds only', () => {
+  assert.equal(isPublished(future, now, true), false);
+  assert.equal(isPublished(future, now, false), true); // dev and previews
+});
+
+test('past, non-draft entries publish in both modes', () => {
+  assert.equal(isPublished(past, now, true), true);
+  assert.equal(isPublished(past, now, false), true);
+});
+
+test('ordering is date descending', () => {
+  const older = { id: 'older', data: { date: new Date('2026-07-01') } };
+  const newer = { id: 'newer', data: { date: new Date('2026-07-20') } };
+  assert.deepEqual([older, newer].sort(compareEntries), [newer, older]);
+});
+
+test('ordering ties on date break by slug, ascending, deterministically', () => {
+  const date = new Date('2026-07-20');
+  const a = { id: 'autumn-notes', data: { date } };
+  const b = { id: 'bread-again', data: { date } };
+  assert.deepEqual([b, a].sort(compareEntries), [a, b]);
+  assert.deepEqual([a, b].sort(compareEntries), [a, b]);
+});
