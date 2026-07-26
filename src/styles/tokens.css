@@ -1,0 +1,88 @@
+/* A Thousand And One — design tokens.
+   Reconciled from design/mi-blog-design/tokens/ (colors, typography,
+   spacing). Token names are the export's own. Light-only by ruling: the
+   dark theme block and theme toggle were reconciled out of the programme
+   (no dark mode), and no theme attribute may reappear. */
+
+:root {
+  /* base palette — warm neutrals; one accent ("rubric" red, after
+     manuscript rubrication) */
+  --paper: #fefbf8;        /* primary background */
+  --ink: #17130e;          /* headings, strong rules, the black of the ident */
+  --ink-body: #221c14;     /* long-form body text */
+  --ink-muted: #57503f;    /* excerpts, standfirsts, footnotes */
+  --ink-faint: #7a7166;    /* metadata, captions, nav at rest */
+  --ink-ghost: #b0a89c;    /* placeholders, disabled, folios */
+  --rubric: oklch(0.48 0.13 29);  /* links, tags, kickers — use sparingly */
+  --wash: #f7f2ea;         /* recessed surfaces: code blocks, inline code */
+  --desk: #f1ece4;         /* off-canvas chrome, canvas behind pages */
+  --hairline: rgba(23, 19, 14, 0.12);
+  --hairline-strong: rgba(23, 19, 14, 0.25);
+
+  /* semantic aliases */
+  --surface-page: var(--paper);
+  --surface-code: var(--wash);
+  --text-heading: var(--ink);
+  --text-body: var(--ink-body);
+  --text-secondary: var(--ink-muted);
+  --text-meta: var(--ink-faint);
+  --text-ghost: var(--ink-ghost);
+  --link: var(--rubric);
+  --link-hover: var(--ink);
+  --tag: var(--rubric);
+  --rule: var(--ink);
+
+  /* type — Cormorant Garamond (logotype family) for display; EB Garamond
+     for long-form reading; IBM Plex Mono for the apparatus (metadata,
+     captions, tags, labels, code). Fallback stacks ship first; @font-face
+     arrives with verified licences. */
+  --font-display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* scale */
+  --size-hero: 62px;        /* featured title on index */
+  --size-title: 58px;       /* article title */
+  --size-h2: 34px;          /* article section heading */
+  --size-entry: 33px;       /* index entry title */
+  --size-pull: 32px;        /* pull quote */
+  --size-standfirst: 24px;  /* article subtitle, italic */
+  --size-prevnext: 24px;
+  --size-summary: 21px;     /* details/summary, italic */
+  --size-body: 19.5px;
+  --size-list: 18.5px;
+  --size-excerpt: 17px;
+  --size-footnote: 15px;
+  --size-sidenote: 14px;
+  --size-code: 13.5px;
+  --size-caption: 11px;     /* figcaption, mono */
+  --size-nav: 11px;
+  --size-meta: 10.5px;      /* bylines, datelines, labels */
+  --size-tag: 10px;
+
+  /* leading */
+  --leading-display: 1.04;
+  --leading-heading: 1.15;
+  --leading-body: 1.68;
+  --leading-tight: 1.5;
+
+  /* mono tracking (always with uppercase) */
+  --track-meta: 0.18em;
+  --track-nav: 0.2em;
+  --track-label: 0.22em;
+
+  /* weights: display+body use 400/500 only; mono 400, 500 for emphasis */
+  --weight-display: 500;
+
+  /* layout & rhythm */
+  --measure: 640px;         /* reading column */
+  --measure-wide: 860px;    /* breakout figures */
+  --sidenote-width: 195px;
+  --sidenote-gap: 60px;     /* gap between column edge and sidenote */
+  --sidenote-gutter: 300px; /* right margin the article column reserves for notes */
+  --space-para: 26px;       /* paragraph rhythm */
+  --space-block: 52px;      /* pull quotes, figures */
+  --space-section: 64px;    /* before h2 */
+  --space-ornament: 60px;   /* around the ··· section break */
+  --page-pad: 88px;
+}

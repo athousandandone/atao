@@ -3,6 +3,7 @@
 // unstyled until Slices 3–4. Dates are civil and displayed en-GB; the
 // UTC time zone pins the coerced YYYY-MM-DD date against local-zone drift.
 import BlogShell from './BlogShell.astro';
+import '../styles/prose.css';
 import type { BlogData } from '../lib/schema';
 
 interface Props {
@@ -26,6 +27,8 @@ const displayDate = new Intl.DateTimeFormat('en-GB', {
       <p>{data.standfirst}</p>
       <p><time datetime={isoDate}>{displayDate}</time></p>
     </header>
-    <slot />
+    <div class="prose">
+      <slot />
+    </div>
   </article>
 </BlogShell>
