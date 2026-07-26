@@ -14,6 +14,7 @@ Concise always-on reminders live in `.claude/rules/`:
 
 - `.claude/rules/00-working-agreement.md`
 - `.claude/rules/01-git-workflow.md`
+- `.claude/rules/02-secrets-and-security.md`
 
 ## Identity
 
