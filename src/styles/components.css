@@ -275,18 +275,23 @@
   color: var(--ink);
 }
 
-/* ---------- article composition (2b: 1080px page, 640px column offset
-   left so the right margin holds sidenotes) ---------- */
+/* ---------- article composition. Editor's ruling at the Slice 4
+   review (2026-07-27): the title block and reading column sit properly
+   centred, diverging from the rendered 2b's left-of-centre column and
+   reserved right gutter. Sidenotes float into the symmetric right
+   margin where the viewport has room (prose.css, ≥1200px) and sit
+   inline below. ---------- */
 
 .article {
   max-width: 1080px;
   margin-inline: auto;
-  padding-top: 84px;
+  padding-top: clamp(56px, 7vw, 84px);
 }
 
 .article-head {
-  width: 660px;
-  margin: 0 290px 0 130px; /* centred on the column axis, x = 460 */
+  max-width: 660px;
+  margin-inline: auto;
+  padding: 0 clamp(24px, 5vw, 48px);
   text-align: center;
 }
 .article-head .kicker {
@@ -299,6 +304,7 @@
 .article-head h1 {
   margin: 22px 0 0;
   font: var(--weight-display) var(--size-title) / var(--leading-display) var(--font-display);
+  font-size: clamp(38px, 6.5vw, var(--size-title));
   text-wrap: pretty;
 }
 .article-head .standfirst {
@@ -324,8 +330,10 @@
 }
 
 .article-column {
-  width: var(--measure);
-  margin: 56px var(--sidenote-gutter) 72px 140px;
+  width: auto;
+  max-width: var(--measure);
+  margin: 48px auto 64px;
+  padding: 0 clamp(24px, 5vw, 48px);
 }
 
 .filed-under {
@@ -344,7 +352,7 @@
   border-top: 1px solid var(--rule);
 }
 .prevnext > div {
-  padding: 28px 48px;
+  padding: 28px clamp(24px, 5vw, 48px);
 }
 .prevnext > div:first-child {
   border-right: 1px solid rgba(23, 19, 14, 0.16);
@@ -381,33 +389,8 @@
   aspect-ratio: 16 / 7;
 }
 
-/* ---------- article responsive collapse (new design work): below the
-   width that can hold the 1080px composition, the column centres, the
-   sidenote gutter goes, and prose.css brings sidenotes inline at the
-   same 1140px breakpoint. ---------- */
-
-@media (max-width: 1140px) {
-  .article {
-    padding-top: 56px;
-  }
-  .article-head {
-    width: auto;
-    margin: 0;
-    padding: 0 clamp(24px, 5vw, 48px);
-  }
-  .article-head h1 {
-    font-size: clamp(38px, 6.5vw, var(--size-title));
-  }
-  .article-column {
-    width: auto;
-    max-width: var(--measure);
-    margin: 48px auto 64px;
-    padding: 0 clamp(24px, 5vw, 48px);
-  }
-  .prevnext > div {
-    padding: 24px clamp(24px, 5vw, 48px);
-  }
-}
+/* With the centred composition fluid by default, only the compact bar
+   needs a small-viewport step. */
 
 @media (max-width: 720px) {
   .article-bar {

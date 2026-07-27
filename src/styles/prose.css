@@ -63,9 +63,9 @@
   width: var(--measure-wide);
   margin-left: calc((var(--measure-wide) - var(--measure)) / -2);
 }
-/* Fluid fallback (new design work): below the composition breakpoint
-   the breakout has no room to break out and returns to the column. */
-@media (max-width: 1140px) {
+/* Fluid fallback (new design work): once the viewport cannot hold the
+   860px breakout beside its padding, it returns to the column. */
+@media (max-width: 960px) {
   .prose figure.breakout { width: auto; margin-left: 0; }
 }
 .prose img { display: block; max-width: 100%; }
@@ -171,7 +171,7 @@
 .prose details li + li { margin-top: 8px; } /* D11 */
 
 /* Sidenotes — margin notes. Requires room to the right of the column
-   (article-body composition, Slice 4). Falls back inline ≤1080px.
+   (article composition, Slice 4). Falls back inline ≤1200px.
    D6: the top rule is the rendered 0.3, not --hairline-strong (0.25). */
 .prose aside {
   float: right;
@@ -182,10 +182,10 @@
   font: italic 400 var(--size-sidenote) / var(--leading-tight) var(--font-body);
   color: var(--text-meta);
 }
-/* Inline fallback aligned with the Slice 4 composition breakpoint
-   (1140px, was the export's 1080px): between the two values the gutter
-   is already gone, so a floating sidenote would overflow the page. */
-@media (max-width: 1140px) {
+/* Inline fallback. With the centred column (the Editor's Slice 4
+   review ruling) a floated note reaches 255px past the content edge,
+   which a viewport below ~1200px cannot hold without overflow. */
+@media (max-width: 1200px) {
   .prose aside { float: none; width: auto; margin: 26px 0 0; padding: 10px 0 0; }
 }
 
