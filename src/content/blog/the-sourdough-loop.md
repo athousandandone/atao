@@ -8,6 +8,8 @@ tags:
 
 A sourdough starter is the tightest product loop most kitchens will ever run. You observe, you intervene, you wait, and the jar tells you — without flattery and without mercy — whether the intervention worked. There is no committee to persuade and no dashboard to misread. The loaf is the release, and everyone who eats it is a user.
 
+<aside>Sourdough predates written recipes; the earliest leavened loaves are older than the alphabet that later described them.</aside>
+
 That honesty is why sourdough rewards the same habits that make any product better: observe before you optimise, change one variable at a time, and keep a record you can actually trust.
 
 ## Observe before you optimise
@@ -16,9 +18,28 @@ The first mistake is to start adjusting before you know what "normal" looks like
 
 So for the first week, the discipline is deliberately dull: feed at the same time, with the same flour, at the same ratio, and write down what happens. Not what you hoped would happen. What happened.
 
+<figure>
+  <div class="placeholder ratio-16x7"><span>diagram · feed → rise → peak → fall</span></div>
+  <figcaption>Fig. 1 — The starter's rhythm. Latency: 4–12 hours.</figcaption>
+</figure>
+
 ## Change one variable
 
 Once the rhythm is legible, you earn the right to experiment — one change per bake, never two. Hydration is the classic first variable because its effects are visible at every stage: in the mixing bowl, under your hands, and in the crumb.
+
+<aside>Times and temperatures assume a kitchen at 21 °C. Colder rooms lengthen every step; the loop, not the clock, is the authority.</aside>
+
+Every experiment needs a control, and mine is the reference formula — the loaf that every change is measured against:
+
+### The reference formula
+
+<dl>
+  <dt>Strong white flour</dt><dd>450 g</dd>
+  <dt>Wholemeal rye flour</dt><dd>50 g</dd>
+  <dt>Water, 26 °C</dt><dd>350 g</dd>
+  <dt>Ripe starter</dt><dd>100 g</dd>
+  <dt>Fine sea salt</dt><dd>10 g</dd>
+</dl>
 
 | Bake | Hydration | Bulk time | Result                                   |
 | ---- | --------- | --------- | ---------------------------------------- |
@@ -32,6 +53,11 @@ Bakes 3 and 4 are the whole lesson in miniature: the same hydration, half an hou
 ### Reading the crumb
 
 The crumb is the postmortem. Even, small holes and a pale crust say the dough wanted more time; a dense band at the base says it ran out of strength; large caverns under the crust say the shaping was too gentle for the hydration. Each pattern points back to exactly one stage of the process, which is what makes the loop closeable at all.
+
+<figure class="breakout">
+  <div class="placeholder ratio-3x2"><span>photograph · crumb shot, morning light · 3:2</span></div>
+  <figcaption>Fig. 2 — An open, even crumb is a green build.</figcaption>
+</figure>
 
 Because the record matters more than memory, it is worth keeping honestly — even a few lines of code will do:
 
@@ -59,6 +85,16 @@ log = [
 ```
 
 The point is not the tooling — a notebook works as well as a dataclass. The point is that the entry is written before the loaf is cut, so the prediction is on record before the result can edit it.[^2]
+
+<details>
+  <summary>Variations — rye, spelt and the weekday loaf</summary>
+  <p>Each variation changes exactly one variable, because changing two teaches you nothing.</p>
+  <ul>
+    <li>Swap the rye for spelt and drop the water to 330 g; spelt is thirstier than it looks.</li>
+    <li>For a weekday loaf, double the starter and halve the bulk time. Faster loop, shallower flavour.</li>
+    <li>Ten per cent toasted seeds is the largest change that requires no other change.</li>
+  </ul>
+</details>
 
 ---
 

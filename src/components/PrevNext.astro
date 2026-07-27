@@ -1,0 +1,36 @@
+---
+// Adjacent-article navigation (design 2b): the publication reads as a
+// sequence, Previous being the older neighbour and Next the newer. An
+// absent neighbour leaves its cell empty so the rule and grid hold.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  older: CollectionEntry<'blog'> | null;
+  newer: CollectionEntry<'blog'> | null;
+}
+
+const { older, newer } = Astro.props;
+---
+
+{
+  (older || newer) && (
+    <nav class="prevnext" aria-label="Adjacent articles">
+      <div>
+        {older && (
+          <a href={`/blog/${older.id}/`}>
+            <span class="label">← Previous</span>
+            <span class="title">{older.data.title}</span>
+          </a>
+        )}
+      </div>
+      <div class="next">
+        {newer && (
+          <a href={`/blog/${newer.id}/`}>
+            <span class="label">Next →</span>
+            <span class="title">{newer.data.title}</span>
+          </a>
+        )}
+      </div>
+    </nav>
+  )
+}
