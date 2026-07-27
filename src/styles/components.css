@@ -242,3 +242,174 @@
     border-top: 1px solid var(--hairline);
   }
 }
+
+/* ---------- article identity bar (2b: compact wordmark and nav) ---------- */
+
+.article-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 48px;
+  border-bottom: 1px solid rgba(23, 19, 14, 0.16);
+}
+.article-bar img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.article-bar nav {
+  display: flex;
+  gap: 32px;
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+}
+.article-bar nav a {
+  color: var(--text-meta);
+}
+.article-bar nav a:hover {
+  color: var(--ink);
+}
+
+/* ---------- article composition (2b: 1080px page, 640px column offset
+   left so the right margin holds sidenotes) ---------- */
+
+.article {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-top: 84px;
+}
+
+.article-head {
+  width: 660px;
+  margin: 0 290px 0 130px; /* centred on the column axis, x = 460 */
+  text-align: center;
+}
+.article-head .kicker {
+  margin: 0;
+  font: 500 var(--size-nav) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--rubric);
+}
+.article-head h1 {
+  margin: 22px 0 0;
+  font: var(--weight-display) var(--size-title) / var(--leading-display) var(--font-display);
+  text-wrap: pretty;
+}
+.article-head .standfirst {
+  margin: 20px 0 0;
+  font: italic 400 var(--size-standfirst) / 1.4 var(--font-display);
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.article-head .byline {
+  margin: 28px 0 0;
+  font: 400 var(--size-meta) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+/* The 44px title rule */
+.article-head::after {
+  content: '';
+  display: block;
+  width: 44px;
+  border-top: 1px solid var(--rule);
+  margin: 40px auto 0;
+}
+
+.article-column {
+  width: var(--measure);
+  margin: 56px var(--sidenote-gutter) 72px 140px;
+}
+
+.filed-under {
+  margin: 28px 0 0;
+  font: 400 var(--size-meta) / 1.4 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+/* ---------- adjacent-article navigation (2b) ---------- */
+
+.prevnext {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--rule);
+}
+.prevnext > div {
+  padding: 28px 48px;
+}
+.prevnext > div:first-child {
+  border-right: 1px solid rgba(23, 19, 14, 0.16);
+}
+.prevnext .next {
+  text-align: right;
+}
+.prevnext a {
+  display: block;
+  color: var(--ink);
+}
+.prevnext .label {
+  display: block;
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+.prevnext .title {
+  display: block;
+  margin-top: 8px;
+  font: var(--weight-display) var(--size-prevnext) / 1.3 var(--font-display);
+}
+.prevnext a:hover .title {
+  color: var(--rubric);
+}
+
+/* ---------- figure placeholder ratios (fixture imagery slots) ---------- */
+
+.placeholder.ratio-3x2 {
+  aspect-ratio: 3 / 2;
+}
+.placeholder.ratio-16x7 {
+  aspect-ratio: 16 / 7;
+}
+
+/* ---------- article responsive collapse (new design work): below the
+   width that can hold the 1080px composition, the column centres, the
+   sidenote gutter goes, and prose.css brings sidenotes inline at the
+   same 1140px breakpoint. ---------- */
+
+@media (max-width: 1140px) {
+  .article {
+    padding-top: 56px;
+  }
+  .article-head {
+    width: auto;
+    margin: 0;
+    padding: 0 clamp(24px, 5vw, 48px);
+  }
+  .article-head h1 {
+    font-size: clamp(38px, 6.5vw, var(--size-title));
+  }
+  .article-column {
+    width: auto;
+    max-width: var(--measure);
+    margin: 48px auto 64px;
+    padding: 0 clamp(24px, 5vw, 48px);
+  }
+  .prevnext > div {
+    padding: 24px clamp(24px, 5vw, 48px);
+  }
+}
+
+@media (max-width: 720px) {
+  .article-bar {
+    padding: 16px clamp(20px, 4vw, 48px);
+  }
+  .article-bar img {
+    height: 34px;
+  }
+}

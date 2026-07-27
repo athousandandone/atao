@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { blogSchema } from '../../src/lib/schema.ts';
-import { compareEntries, isPublished } from '../../src/lib/publish.ts';
+import { adjacentEntries, compareEntries, isPublished } from '../../src/lib/publish.ts';
 
 const valid = {
   title: 'The Sourdough Loop',
@@ -103,4 +103,25 @@ test('ordering ties on date break by slug, ascending, deterministically', () => 
   const b = { id: 'bread-again', data: { date } };
   assert.deepEqual([b, a].sort(compareEntries), [a, b]);
   assert.deepEqual([a, b].sort(compareEntries), [a, b]);
+});
+
+// ---- prev/next adjacency (Slice 4) ----
+
+test('adjacentEntries reads the ordered list as newest-first', () => {
+  const ordered = [{ id: 'newest' }, { id: 'middle' }, { id: 'oldest' }];
+  assert.deepEqual(adjacentEntries(ordered, 'middle'), {
+    newer: { id: 'newest' },
+    older: { id: 'oldest' },
+  });
+});
+
+test('adjacentEntries returns null at the ends of the sequence', () => {
+  const ordered = [{ id: 'newest' }, { id: 'oldest' }];
+  assert.deepEqual(adjacentEntries(ordered, 'newest'), { newer: null, older: { id: 'oldest' } });
+  assert.deepEqual(adjacentEntries(ordered, 'oldest'), { newer: { id: 'newest' }, older: null });
+});
+
+test('adjacentEntries handles a single entry and an unknown id', () => {
+  assert.deepEqual(adjacentEntries([{ id: 'only' }], 'only'), { newer: null, older: null });
+  assert.deepEqual(adjacentEntries([{ id: 'only' }], 'absent'), { newer: null, older: null });
 });

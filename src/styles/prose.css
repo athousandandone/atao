@@ -63,6 +63,11 @@
   width: var(--measure-wide);
   margin-left: calc((var(--measure-wide) - var(--measure)) / -2);
 }
+/* Fluid fallback (new design work): below the composition breakpoint
+   the breakout has no room to break out and returns to the column. */
+@media (max-width: 1140px) {
+  .prose figure.breakout { width: auto; margin-left: 0; }
+}
 .prose img { display: block; max-width: 100%; }
 .prose figcaption {
   margin-top: 12px;
@@ -177,13 +182,25 @@
   font: italic 400 var(--size-sidenote) / var(--leading-tight) var(--font-body);
   color: var(--text-meta);
 }
-@media (max-width: 1080px) {
+/* Inline fallback aligned with the Slice 4 composition breakpoint
+   (1140px, was the export's 1080px): between the two values the gutter
+   is already gone, so a floating sidenote would overflow the page. */
+@media (max-width: 1140px) {
   .prose aside { float: none; width: auto; margin: 26px 0 0; padding: 10px 0 0; }
 }
 
 /* Footnote references */
 .prose sup { font-size: 12px; line-height: 0; }
 .prose sup a { font-family: var(--font-mono); }
+
+/* The MI end-mark, inserted by the build between essay text and the
+   footnote apparatus (src/lib/end-mark.mjs) — article composition. */
+.prose .end-mark {
+  width: 26px;
+  height: 26px;
+  margin: 56px auto 0;
+  opacity: 0.85;
+}
 
 /* Section break ornament. The markup is the <hr> Sätteri emits from ---;
    the ornament is its ::after (the rendered design's <div> is a prototype

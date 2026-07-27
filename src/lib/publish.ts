@@ -31,3 +31,21 @@ export function compareEntries(a: OrderFields, b: OrderFields): number {
   if (byDate !== 0) return byDate;
   return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 }
+
+/**
+ * Neighbours of an entry within the canonically ordered list (newest
+ * first): `newer` is the entry published after it, `older` the one
+ * before. The article page renders older as "Previous" and newer as
+ * "Next" (design 2b reads the publication as a sequence).
+ */
+export function adjacentEntries<T extends { id: string }>(
+  ordered: T[],
+  id: string,
+): { newer: T | null; older: T | null } {
+  const index = ordered.findIndex((entry) => entry.id === id);
+  if (index === -1) return { newer: null, older: null };
+  return {
+    newer: ordered[index - 1] ?? null,
+    older: ordered[index + 1] ?? null,
+  };
+}

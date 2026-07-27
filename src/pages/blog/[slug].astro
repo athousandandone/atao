@@ -1,23 +1,26 @@
 ---
 // /blog/[slug]/ — one route per publishable entry; entry.id is the slug
 // (filename). Paths derive from the structural access helper, so drafts
-// and (in production) future-dated entries never route.
-import { render } from 'astro:content';
+// and (in production) future-dated entries never route. Neighbours come
+// from the same canonical order the index uses. The article body is the
+// entry's rendered HTML, placed by ArticleLayout so the MI end-mark can
+// be composed into it (src/lib/end-mark.mjs).
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import { getPublishedEntries } from '../../lib/content';
+import { adjacentEntries } from '../../lib/publish';
 
 export async function getStaticPaths() {
   const entries = await getPublishedEntries();
-  return entries.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  return entries.map((entry) => {
+    const { newer, older } = adjacentEntries(entries, entry.id);
+    return {
+      params: { slug: entry.id },
+      props: { entry, newer, older },
+    };
+  });
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { entry, newer, older } = Astro.props;
 ---
 
-<ArticleLayout data={entry.data}>
-  <Content />
-</ArticleLayout>
+<ArticleLayout entry={entry} older={older} newer={newer} />
