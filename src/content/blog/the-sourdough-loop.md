@@ -1,10 +1,12 @@
 ---
 title: The Sourdough Loop
 standfirst: What a jar of flour and water teaches about feedback, patience and the discipline of changing one thing at a time.
-date: 2026-07-24
+date: 2026-07-25
 tags:
   - Food
 ---
+
+<!-- @format -->
 
 A sourdough starter is the tightest product loop most kitchens will ever run. You observe, you intervene, you wait, and the jar tells you — without flattery and without mercy — whether the intervention worked. There is no committee to persuade and no dashboard to misread. The loaf is the release, and everyone who eats it is a user.
 
@@ -20,8 +22,8 @@ So for the first week, the discipline is deliberately dull: feed at the same tim
 
 Once the rhythm is legible, you earn the right to experiment — one change per bake, never two. Hydration is the classic first variable because its effects are visible at every stage: in the mixing bowl, under your hands, and in the crumb.
 
-| Bake | Hydration | Bulk time | Result                                  |
-| ---- | --------- | --------- | --------------------------------------- |
+| Bake | Hydration | Bulk time | Result                                   |
+| ---- | --------- | --------- | ---------------------------------------- |
 | 1    | 65%       | 4 h       | Tight crumb, easy handling, dull flavour |
 | 2    | 70%       | 4 h       | More open, slight spread on the stone    |
 | 3    | 75%       | 3.5 h     | Open crumb, blistered crust, sticky work |
