@@ -22,8 +22,14 @@
     display: none;
   }
 
-  /* Placeholder imagery slots are a screen-side promise, not content. */
-  .placeholder,
+  /* Placeholder imagery slots are a screen-side promise, not content.
+     Two rules, deliberately not one selector list: an engine without
+     :has() would invalidate the whole list and print even the bare
+     slot. Split, the slot hides everywhere and dropping the enclosing
+     figure (and its caption) is progressive enhancement. */
+  .placeholder {
+    display: none;
+  }
   figure:has(> .placeholder) {
     display: none;
   }
