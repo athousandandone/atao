@@ -81,7 +81,6 @@ def hydration(flour_g: float, water_g: float) -> float:
     """Baker's percentage: water as a share of flour."""
     return round(water_g / flour_g * 100, 1)
 
-
 log = [
     Bake(3, hydration(500, 375), 3.5, "open crumb, blistered crust"),
     Bake(4, hydration(500, 375), 4.0, "over-proofed, gummy centre"),
