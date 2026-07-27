@@ -37,8 +37,8 @@ export const blogSchema = z.object({
   tags: z.array(z.string().min(1)).optional(),
   // Workflow safety from day one: drafts never reach any output.
   draft: z.boolean().default(false),
-  image: z.string().optional(),
-  imageAlt: z.string().optional(),
+  image: z.string().min(1).optional(),
+  imageAlt: z.string().min(1).optional(),
 });
 
 export type BlogData = z.infer<typeof blogSchema>;
