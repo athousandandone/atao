@@ -1,12 +1,10 @@
 ---
 title: Everything is Product
-standfirst: A few thoughts on why everything we make is a product, and why that matters.s
+standfirst: A few thoughts on why everything we make is a product, and why that matters.
 date: 2026-07-24
 tags:
   - Product
 ---
-
-<!-- @format -->
 
 When people ask what I do, the honest answer depends on the day. Some days I’m designing software. Some days I’m experimenting with AI. Sometimes I’m writing fiction. Occasionally I’m standing in the kitchen trying to work out why one batch of roast potatoes is perfect and the next isn’t.
 

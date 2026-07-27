@@ -1,0 +1,244 @@
+/* ============================================================
+   COMPONENTS — page chrome and index compositions.
+   Values are taken from the rendered approved design (2a index,
+   2b article in Blog Explorations.dc.html), which takes precedence
+   by default (§8). The exploration's desk-and-card frame is canvas
+   presentation, not site design: the page itself is the paper.
+   Hairline opacities the token set does not cover (0.16, 0.18) are
+   carried as literals, as Slice 3 did.
+   Responsive behaviour is new design work (no responsive design
+   exists in the export) — flagged for review.
+   ============================================================ */
+
+/* ---------- index page frame (2a: 984px content, 88px pad) ---------- */
+
+.index-page {
+  max-width: 984px;
+  margin-inline: auto;
+  padding: 40px clamp(24px, 6vw, 88px) 56px;
+}
+
+/* ---------- dateline — two-item row (Editor's ruling: ☾ slot removed,
+   Est. left, motto right) ---------- */
+
+.dateline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  color: var(--text-meta);
+  border-bottom: 1px solid rgba(23, 19, 14, 0.16);
+  padding-bottom: 12px;
+}
+
+/* ---------- masthead (2a: centred wordmark and nav) ---------- */
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 52px;
+}
+.masthead img {
+  width: 252px;
+  max-width: 100%;
+  display: block;
+}
+.masthead nav {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  font: 400 var(--size-nav) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+.masthead nav a {
+  color: var(--text-meta);
+}
+.masthead nav a:hover,
+.masthead nav a[aria-current='page'] {
+  color: var(--ink);
+}
+
+/* Solid rule under the masthead */
+.masthead-rule {
+  margin-top: 36px;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- featured entry (2a lead: text and 4:3 image slot) ---------- */
+
+.featured {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: center;
+  padding: 60px 0 56px;
+}
+.featured .kicker {
+  margin: 0;
+  font: 500 var(--size-nav) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  color: var(--rubric);
+}
+.featured h1 {
+  margin: 18px 0 0;
+  font: var(--weight-display) var(--size-hero) / 1.02 var(--font-display);
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+.featured h1 a {
+  color: var(--ink);
+}
+.featured h1 a:hover {
+  color: var(--rubric);
+}
+.featured .standfirst {
+  margin: 22px 0 0;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.featured .read-link {
+  display: inline-block;
+  margin-top: 26px;
+  font: 500 var(--size-nav) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+}
+
+/* Image slot: the placeholder pattern survives until real imagery
+   exists (§8). */
+.placeholder {
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(23, 19, 14, 0.18);
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 9px,
+    rgba(23, 19, 14, 0.05) 9px 10px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.placeholder span {
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-ghost);
+}
+
+/* Double hairline band separating featured from the entry grid */
+.band-rule {
+  border: 0;
+  margin: 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  height: 3px;
+}
+
+/* ---------- entry grid (2a: two columns, hairlines between rows) ---------- */
+
+.entry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 72px;
+}
+.entry {
+  padding: 38px 0;
+}
+/* Rows after the first carry a separating hairline above (the rendered
+   design's border-bottom on non-final rows, restated as border-top so
+   any entry count keeps rules between rows only). */
+.entry:nth-child(n + 3) {
+  border-top: 1px solid var(--hairline);
+}
+.entry .meta {
+  margin: 0;
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+.entry .meta .tag {
+  color: var(--tag);
+}
+.entry h2 {
+  margin: 12px 0 0;
+  font: var(--weight-display) var(--size-entry) / 1.1 var(--font-display);
+}
+.entry h2 a {
+  color: var(--ink);
+}
+.entry h2 a:hover {
+  color: var(--rubric);
+}
+.entry .excerpt {
+  margin: 10px 0 0;
+  font-size: var(--size-excerpt);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+/* ---------- index footer (2a: MI device over the imprint line) ---------- */
+
+.site-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 44px;
+  padding-top: 40px;
+  border-top: 1px solid var(--rule);
+}
+.site-foot img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  opacity: 0.85;
+}
+.site-foot p {
+  margin: 0;
+  font: 400 var(--size-tag) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+/* ---------- index responsive collapse (new design work) ---------- */
+
+@media (max-width: 900px) {
+  .featured {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 48px 0 44px;
+  }
+  .featured h1 {
+    font-size: clamp(40px, 7.5vw, var(--size-hero));
+  }
+}
+
+@media (max-width: 720px) {
+  .masthead {
+    margin-top: 40px;
+  }
+  .masthead nav {
+    gap: 28px;
+  }
+  .entry-grid {
+    grid-template-columns: 1fr;
+  }
+  .entry {
+    padding: 30px 0;
+  }
+  .entry:nth-child(n + 2) {
+    border-top: 1px solid var(--hairline);
+  }
+}

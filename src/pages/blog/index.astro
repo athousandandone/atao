@@ -1,34 +1,65 @@
 ---
-// /blog/ — entrance and index. Unstyled semantic list until Slice 4
-// implements design 2a. Entries come only through the structural access
-// helper, never getCollection directly.
+// /blog/ — the publication index, implementing approved design 2a.
+// Featured entry = the most recent article (Editor's ruling); the rest
+// fill the two-column grid. Entries come only through the structural
+// access helper, never getCollection directly. Nav carries "The Blog"
+// alone until the Archive and About routes exist (Slice 5).
 import BlogShell from '../../layouts/BlogShell.astro';
+import EntryCard from '../../components/EntryCard.astro';
 import { getPublishedEntries } from '../../lib/content';
+import { formatDateShort, isoDay } from '../../lib/dates';
 
 const entries = await getPublishedEntries();
-const dateFormat = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
+const [featured, ...rest] = entries;
+const featuredTag = featured?.data.tags?.[0];
 ---
 
 <BlogShell title="A Thousand And One">
-  <h1>A Thousand And One</h1>
-  <ul>
-    {
-      entries.map((entry) => (
-        <li>
-          <a href={`/blog/${entry.id}/`}>{entry.data.title}</a>
-          <p>{entry.data.standfirst}</p>
-          <p>
-            <time datetime={entry.data.date.toISOString().slice(0, 10)}>
-              {dateFormat.format(entry.data.date)}
-            </time>
-          </p>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="index-page">
+    <header>
+      <p class="dateline">
+        <span>Est. MMXXVI</span>
+        <span>Everything is product</span>
+      </p>
+      <div class="masthead">
+        <img src="/blog/wordmark.png" alt="A Thousand And One" width="391" height="131" />
+        <nav>
+          <a href="/blog/" aria-current="page">The Blog</a>
+        </nav>
+      </div>
+      <hr class="masthead-rule" />
+    </header>
+    <main>
+      {
+        featured && (
+          <article class="featured">
+            <div>
+              <p class="kicker">
+                {featuredTag && `${featuredTag} · `}
+                <time datetime={isoDay(featured.data.date)}>
+                  {formatDateShort(featured.data.date)}
+                </time>
+              </p>
+              <h1>
+                <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
+              </h1>
+              <p class="standfirst">{featured.data.standfirst}</p>
+              <a class="read-link" href={`/blog/${featured.id}/`}>Read the article →</a>
+            </div>
+            <div class="placeholder">
+              <span>featured image · 4:3</span>
+            </div>
+          </article>
+        )
+      }
+      <hr class="band-rule" />
+      <div class="entry-grid">
+        {rest.map((entry) => <EntryCard entry={entry} />)}
+      </div>
+    </main>
+    <footer class="site-foot">
+      <img src="/blog/mi-plain.svg" alt="MI" width="30" height="30" />
+      <p>A Thousand And One · MMXXVI</p>
+    </footer>
+  </div>
 </BlogShell>

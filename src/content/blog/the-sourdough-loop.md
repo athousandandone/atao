@@ -1,12 +1,10 @@
 ---
 title: The Sourdough Loop
 standfirst: What a jar of flour and water teaches about feedback, patience and the discipline of changing one thing at a time.
-date: 2026-07-25
+date: 2026-07-12
 tags:
   - Food
 ---
-
-<!-- @format -->
 
 A sourdough starter is the tightest product loop most kitchens will ever run. You observe, you intervene, you wait, and the jar tells you — without flattery and without mercy — whether the intervention worked. There is no committee to persuade and no dashboard to misread. The loaf is the release, and everyone who eats it is a user.
 

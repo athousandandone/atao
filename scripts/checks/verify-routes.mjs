@@ -29,11 +29,14 @@ import { join, posix } from 'node:path';
 
 // Expected routes, grown per slice. Slice 1: homepage and 404.
 // Slice 2: blog index and the fixture article route.
+// Slice 4: the short and long-form representative fixture routes.
 const EXPECTED = [
   'index.html',
   '404.html',
   'blog/index.html',
   'blog/the-sourdough-loop/index.html',
+  'blog/everything-is-product/index.html',
+  'blog/a-field-guide-to-airport-wayfinding/index.html',
 ];
 
 const SKIP_URL = /^(https?:)?\/\/|^(mailto|tel|data|javascript):|^#/i;
