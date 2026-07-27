@@ -1,0 +1,117 @@
+/* ============================================================
+   PRINT — new design work (no print design exists in the export),
+   flagged as interpretation. Intent: an article prints as a clean
+   document — text, figures, footnotes — with the screen chrome and
+   navigation gone. Warm inks are kept (they print near-black);
+   browsers drop background washes by default and the borders carry
+   the structure.
+   ============================================================ */
+
+@media print {
+  @page {
+    margin: 20mm;
+  }
+
+  /* Screen chrome and navigation have no meaning on paper. */
+  .dateline,
+  .masthead nav,
+  .article-bar,
+  .prevnext,
+  .site-foot,
+  .read-link {
+    display: none;
+  }
+
+  /* Placeholder imagery slots are a screen-side promise, not content. */
+  .placeholder,
+  figure:has(> .placeholder) {
+    display: none;
+  }
+
+  /* Compositions collapse to the page: one column, no gutters. */
+  .index-page {
+    max-width: none;
+    padding: 0;
+  }
+  .featured {
+    grid-template-columns: 1fr;
+    padding: 32px 0;
+  }
+  .entry-grid {
+    grid-template-columns: 1fr;
+  }
+  .entry:nth-child(n + 2) {
+    border-top: 1px solid var(--hairline);
+  }
+  .article {
+    max-width: none;
+    padding-top: 0;
+  }
+  .article-head {
+    width: auto;
+    margin: 24px 0 0;
+  }
+  .article-column {
+    width: auto;
+    max-width: none;
+    margin: 40px 0 0;
+  }
+  .prose {
+    max-width: none;
+  }
+
+  /* Sidenotes join the text; breakouts return to the column. */
+  .prose aside {
+    float: none;
+    width: auto;
+    margin: 20px 0 0;
+    padding: 8px 0 0;
+  }
+  .prose figure.breakout {
+    width: auto;
+    margin-left: 0;
+  }
+
+  /* Reading sizes for paper. */
+  .prose {
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+  .article-head h1 {
+    font-size: 26pt;
+  }
+  .featured h1 {
+    font-size: 24pt;
+  }
+  .article-head .standfirst {
+    font-size: 14pt;
+  }
+  .prose h2 {
+    font-size: 16pt;
+  }
+
+  /* Keep structures whole across page breaks. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  figure,
+  pre,
+  blockquote,
+  dl,
+  details,
+  .prose .footnotes li {
+    break-inside: avoid;
+  }
+
+  /* On paper the summary is a heading, not a control. Engines with
+     ::details-content print a collapsed block disclosed; elsewhere a
+     closed block honestly prints as its summary line alone. */
+  .prose summary {
+    cursor: auto;
+  }
+  .prose details::details-content {
+    content-visibility: visible;
+  }
+}
