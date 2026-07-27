@@ -46,9 +46,20 @@ const featuredTag = featured?.data.tags?.[0];
               <p class="standfirst">{featured.data.standfirst}</p>
               <a class="read-link" href={`/blog/${featured.id}/`}>Read the article →</a>
             </div>
-            <div class="placeholder">
-              <span>featured image · 4:3</span>
-            </div>
+            {
+              featured.data.image ? (
+                <figure class="featured-image">
+                  <img
+                    src={`/images/${featured.data.image}`}
+                    alt={featured.data.imageAlt ?? ''}
+                  />
+                </figure>
+              ) : (
+                <div class="placeholder">
+                  <span>featured image · 4:3</span>
+                </div>
+              )
+            }
           </article>
         )
       }

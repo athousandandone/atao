@@ -1,16 +1,22 @@
 ---
 title: The Sourdough Loop
 standfirst: What a jar of flour and water teaches about feedback, patience and the discipline of changing one thing at a time.
-date: 2026-07-12
+date: 2026-07-26
+image: crumb.jpg
+imageAlt: A sourdough loaf with an open, even crumb.
 tags:
   - Food
 ---
+
+<!-- @format -->
 
 A sourdough starter is the tightest product loop most kitchens will ever run. You observe, you intervene, you wait, and the jar tells you — without flattery and without mercy — whether the intervention worked. There is no committee to persuade and no dashboard to misread. The loaf is the release, and everyone who eats it is a user.
 
 <aside>Sourdough predates written recipes; the earliest leavened loaves are older than the alphabet that later described them.</aside>
 
 That honesty is why sourdough rewards the same habits that make any product better: observe before you optimise, change one variable at a time, and keep a record you can actually trust.
+
+> Every loaf is a build artefact; the starter is the pipeline.
 
 ## Observe before you optimise
 
@@ -19,7 +25,7 @@ The first mistake is to start adjusting before you know what "normal" looks like
 So for the first week, the discipline is deliberately dull: feed at the same time, with the same flour, at the same ratio, and write down what happens. Not what you hoped would happen. What happened.
 
 <figure>
-  <div class="placeholder ratio-16x7"><span>diagram · feed → rise → peak → fall</span></div>
+  <img src="/images/feed-rise-peak-fall.png" alt="The feed → rise → peak → fall rhythm of a sourdough starter." />
   <figcaption>Fig. 1 — The starter's rhythm. Latency: 4–12 hours.</figcaption>
 </figure>
 
@@ -55,7 +61,7 @@ Bakes 3 and 4 are the whole lesson in miniature: the same hydration, half an hou
 The crumb is the postmortem. Even, small holes and a pale crust say the dough wanted more time; a dense band at the base says it ran out of strength; large caverns under the crust say the shaping was too gentle for the hydration. Each pattern points back to exactly one stage of the process, which is what makes the loop closeable at all.
 
 <figure class="breakout">
-  <div class="placeholder ratio-3x2"><span>photograph · crumb shot, morning light · 3:2</span></div>
+  <img src="/images/crumb.jpg" alt="A loaf with an open, even crumb." />
   <figcaption>Fig. 2 — An open, even crumb is a green build.</figcaption>
 </figure>
 
@@ -64,14 +70,12 @@ Because the record matters more than memory, it is worth keeping honestly — ev
 ```python
 from dataclasses import dataclass
 
-
 @dataclass
 class Bake:
     number: int
     hydration: float
     bulk_hours: float
     notes: str
-
 
 def hydration(flour_g: float, water_g: float) -> float:
     """Baker's percentage: water as a share of flour."""

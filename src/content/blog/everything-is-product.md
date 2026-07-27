@@ -6,6 +6,8 @@ tags:
   - Product
 ---
 
+<!-- @format -->
+
 When people ask what I do, the honest answer depends on the day. Some days I’m designing software. Some days I’m experimenting with AI. Sometimes I’m writing fiction. Occasionally I’m standing in the kitchen trying to work out why one batch of roast potatoes is perfect and the next isn’t.
 
 To most people those look like different hobbies. To me they’re exactly the same activity.

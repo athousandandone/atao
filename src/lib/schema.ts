@@ -1,9 +1,13 @@
-import { z } from 'astro/zod';
+/** @format */
+
+import { z } from "astro/zod";
 
 /** True only for a string that is a real calendar date in YYYY-MM-DD form. */
 function isRealCalendarDate(value: string): boolean {
   const date = new Date(`${value}T00:00:00Z`);
-  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+  return (
+    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
+  );
 }
 
 // The blog frontmatter schema (§6 of the migration plan) — the minimum that
@@ -24,8 +28,8 @@ export const blogSchema = z.object({
     z.date(),
     z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be authored as YYYY-MM-DD')
-      .refine(isRealCalendarDate, 'date is not a real calendar date')
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "date must be authored as YYYY-MM-DD")
+      .refine(isRealCalendarDate, "date is not a real calendar date")
       .transform((value) => new Date(`${value}T00:00:00Z`)),
   ]),
   // Optional: a short observation may need no classification. Tag pages
@@ -33,6 +37,8 @@ export const blogSchema = z.object({
   tags: z.array(z.string().min(1)).optional(),
   // Workflow safety from day one: drafts never reach any output.
   draft: z.boolean().default(false),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
 });
 
 export type BlogData = z.infer<typeof blogSchema>;
