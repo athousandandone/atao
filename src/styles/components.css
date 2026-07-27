@@ -45,6 +45,10 @@
 .masthead img {
   width: 252px;
   max-width: 100%;
+  /* The width/height attributes reserve layout; with only the width
+     styled, the height attribute would still apply and squash the
+     logotype — auto keeps the intrinsic ratio. */
+  height: auto;
   display: block;
 }
 .masthead nav {
