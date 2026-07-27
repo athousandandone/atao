@@ -31,13 +31,9 @@ h1, h2, h3, h4, h5, h6, b, strong {
   font-weight: 500;
 }
 
-/* Provisional scaffold so the typography review reads comfortably; page
-   composition (article gutters, sidenote room, chrome) is Slice 4 work. */
-main {
-  padding: 48px 24px 96px;
-}
-main > .prose,
-main > article {
-  margin-inline: auto;
-  max-width: var(--measure);
+/* Keyboard focus (new design work — no focus design exists in the
+   export): the rubric ring, offset clear of the text. */
+:focus-visible {
+  outline: 2px solid var(--rubric);
+  outline-offset: 3px;
 }

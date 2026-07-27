@@ -21,14 +21,16 @@ const displayDate = new Intl.DateTimeFormat('en-GB', {
 ---
 
 <BlogShell title={`${data.title} — A Thousand And One`}>
-  <article>
-    <header>
-      <h1>{data.title}</h1>
-      <p>{data.standfirst}</p>
-      <p><time datetime={isoDate}>{displayDate}</time></p>
-    </header>
-    <div class="prose">
-      <slot />
-    </div>
-  </article>
+  <main>
+    <article>
+      <header>
+        <h1>{data.title}</h1>
+        <p>{data.standfirst}</p>
+        <p><time datetime={isoDate}>{displayDate}</time></p>
+      </header>
+      <div class="prose">
+        <slot />
+      </div>
+    </article>
+  </main>
 </BlogShell>

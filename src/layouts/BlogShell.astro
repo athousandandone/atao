@@ -1,11 +1,13 @@
 ---
-// Minimal blog shell: document skeleton and landmarks. The approved
-// design (2a masthead, nav, footer) arrives in Slice 4. Blog styles are
-// imported only here and in blog layouts — never by the homepage.
-// Blog-internal links are root-absolute with trailing slashes.
+// Blog document shell: head, language and stylesheet set only. The index
+// and article compose their own chrome (design 2a and 2b carry different
+// headers), so the body is a bare slot. Blog styles are imported only
+// here — never by the homepage. Blog-internal links are root-absolute
+// with trailing slashes.
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/blog-base.css';
+import '../styles/components.css';
 
 interface Props {
   title: string;
@@ -22,11 +24,6 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <header>
-      <p><a href="/blog/">A Thousand And One</a></p>
-    </header>
-    <main>
-      <slot />
-    </main>
+    <slot />
   </body>
 </html>

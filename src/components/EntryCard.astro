@@ -1,0 +1,24 @@
+---
+// One entry in the 2a index grid. Meta line is "Tag · date"; an untagged
+// entry's meta degrades to the date alone (Editor's ruling). Reading
+// time was ruled out of the design entirely.
+import type { CollectionEntry } from 'astro:content';
+import { formatDateShort, isoDay } from '../lib/dates';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const tag = entry.data.tags?.[0];
+---
+
+<article class="entry">
+  <p class="meta">
+    {tag && <span class="tag">{tag}</span>}
+    {tag && ' · '}
+    <time datetime={isoDay(entry.data.date)}>{formatDateShort(entry.data.date)}</time>
+  </p>
+  <h2><a href={`/blog/${entry.id}/`}>{entry.data.title}</a></h2>
+  <p class="excerpt">{entry.data.standfirst}</p>
+</article>
