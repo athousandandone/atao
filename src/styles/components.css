@@ -324,17 +324,18 @@
   margin-top: 16px;
 }
 
-/* About: a single centred column at the reading measure */
+/* About: the reading experience is the blog's prose (the page carries
+   the .prose class; prose.css is imported by the page), centred at the
+   measure. The drop cap stays an article-opening treatment — About is
+   not an article, so it alone is switched back off. */
 .about-body {
-  max-width: var(--measure);
-  margin: 36px auto 0;
+  margin: 40px auto 0;
 }
-.about-body p {
-  margin: 0 0 1.2em;
-  font-size: var(--size-excerpt);
-  line-height: 1.65;
-  color: var(--text-secondary);
-  text-wrap: pretty;
+.prose.about-body > p:first-of-type::first-letter {
+  float: none;
+  font: inherit;
+  color: inherit;
+  padding: 0;
 }
 
 @media (max-width: 720px) {
