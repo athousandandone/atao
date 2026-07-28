@@ -40,7 +40,7 @@ export async function check() {
   const htmlFiles = listFiles(DIST).filter((f) => /\.html$/i.test(f));
   const pages = htmlFiles.filter((f) => f !== '404.html');
   const articlePages = pages.filter(
-    (f) => /^blog\/[^/]+\/index\.html$/.test(f) && !/^blog\/(archive|about|tags)\//.test(f),
+    (f) => /^blog\/[^/]+\/index\.html$/.test(f) && !/^blog\/(archive|tags)\//.test(f),
   );
 
   // 1. robots.txt names an emitted sitemap file at the origin.
@@ -126,10 +126,10 @@ export async function check() {
   }
 
   // 4. Per-page metadata: one title/description everywhere; one
-  //    self-referential canonical (og:url identical) on blog pages;
-  //    no canonical on the 404. The homepage remains a preserved port
-  //    and is out of scope here.
-  const metaScope = htmlFiles.filter((f) => f.startsWith('blog/') || f === '404.html');
+  //    self-referential canonical (og:url identical) on every designed
+  //    page; no canonical on the 404. Only the homepage is out of scope
+  //    here — it remains a preserved port.
+  const metaScope = htmlFiles.filter((f) => f !== 'index.html');
   for (const file of metaScope) {
     const counts = { title: 0, description: 0, canonical: [], ogUrl: [] };
     for (const node of walkNodes(parseHtmlFile(`${DIST}/${file}`))) {
