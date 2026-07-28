@@ -1,0 +1,23 @@
+---
+// /about/ — about the entire site, so it lives at the root, not under
+// /blog/ (Editor's ruling, 2026-07-28). The copy is the Editor's (the
+// slice-entry decision); the single paragraph below is an interim
+// scaffold to be replaced before the pull request opens.
+import BlogShell from '../layouts/BlogShell.astro';
+import Masthead from '../components/Masthead.astro';
+import SiteFoot from '../components/SiteFoot.astro';
+import { description as siteDescription } from '../site';
+---
+
+<BlogShell title="About" description={siteDescription} path="/about/">
+  <div class="index-page">
+    <Masthead current="about" />
+    <main class="about">
+      <h1 class="section-title">About</h1>
+      <div class="about-body">
+        <p>About copy to follow.</p>
+      </div>
+    </main>
+    <SiteFoot />
+  </div>
+</BlogShell>
