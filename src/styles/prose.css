@@ -139,7 +139,13 @@
 .prose dd {
   margin: 0; padding: 11px 0;
   border-bottom: 1px solid rgba(23, 19, 14, 0.1); /* D2 */
-  align-self: center;
+  /* The export centres the shorter dd box itself (align-self: center),
+     which drops its hairline out of line with the dt's — visibly broken
+     at the differing font sizes, so ruled against the export (Editor,
+     2026-07-28): the cell stretches so the row's hairline is continuous,
+     and the value text centres within it. */
+  display: flex;
+  align-items: center;
   font: 400 13px var(--font-mono); color: var(--text-secondary);
 }
 
