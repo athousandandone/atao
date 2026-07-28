@@ -1,0 +1,47 @@
+---
+// /blog/archive/ — the complete published record, year-grouped and
+// chronological (newest first, matching the publication order the index
+// uses). No archive exists in the rendered explorations, so the page is
+// a mechanical derivation from the fixed design system: index chrome,
+// plain year headings, mono dates against display titles. Presentation
+// refinements are review questions (plan, Slice 5).
+import BlogShell from '../../layouts/BlogShell.astro';
+import Masthead from '../../components/Masthead.astro';
+import SiteFoot from '../../components/SiteFoot.astro';
+import { getPublishedEntries } from '../../lib/content';
+import { formatDateShort, isoDay } from '../../lib/dates';
+
+const entries = await getPublishedEntries();
+const byYear = new Map<number, typeof entries>();
+for (const entry of entries) {
+  const year = entry.data.date.getUTCFullYear();
+  const group = byYear.get(year);
+  if (group) group.push(entry);
+  else byYear.set(year, [entry]);
+}
+---
+
+<BlogShell title="Archive — A Thousand And One">
+  <div class="index-page">
+    <Masthead current="archive" />
+    <main class="archive">
+      <h1 class="section-title">Archive</h1>
+      {
+        [...byYear.entries()].map(([year, group]) => (
+          <section class="archive-year">
+            <h2>{year}</h2>
+            <ul>
+              {group.map((entry) => (
+                <li>
+                  <time datetime={isoDay(entry.data.date)}>{formatDateShort(entry.data.date)}</time>
+                  <a href={`/blog/${entry.id}/`}>{entry.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </main>
+    <SiteFoot />
+  </div>
+</BlogShell>

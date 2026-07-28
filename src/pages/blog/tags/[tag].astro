@@ -1,0 +1,41 @@
+---
+// /blog/tags/<slug>/ — every published article filed under one tag.
+// Routes come from the tested slug helper (lowercase-hyphen; a display-
+// name collision fails the build rather than merging tags silently).
+// Presentation reuses the index's entry cards in the two-column grid —
+// a mechanical derivation, as no tag page exists in the explorations.
+import BlogShell from '../../../layouts/BlogShell.astro';
+import Masthead from '../../../components/Masthead.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import EntryCard from '../../../components/EntryCard.astro';
+import { getPublishedEntries } from '../../../lib/content';
+import { tagsBySlug } from '../../../lib/tag-slug';
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries();
+  return [...tagsBySlug(entries)].map(([slug, group]) => ({
+    params: { tag: slug },
+    props: { name: group.name, entries: group.entries },
+  }));
+}
+
+interface Props {
+  name: string;
+  entries: Awaited<ReturnType<typeof getPublishedEntries>>;
+}
+
+const { name, entries } = Astro.props;
+---
+
+<BlogShell title={`${name} — A Thousand And One`}>
+  <div class="index-page">
+    <Masthead />
+    <main>
+      <h1 class="section-title">Filed under: {name}</h1>
+      <div class="entry-grid tag-grid">
+        {entries.map((entry) => <EntryCard entry={entry} />)}
+      </div>
+    </main>
+    <SiteFoot />
+  </div>
+</BlogShell>
