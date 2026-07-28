@@ -7,6 +7,7 @@ import BlogShell from '../layouts/BlogShell.astro';
 import Masthead from '../components/Masthead.astro';
 import SiteFoot from '../components/SiteFoot.astro';
 import { description as siteDescription } from '../site';
+import '../styles/prose.css';
 ---
 
 <BlogShell title="About" description={siteDescription} path="/about/">
@@ -14,8 +15,22 @@ import { description as siteDescription } from '../site';
     <Masthead current="about" />
     <main class="about">
       <h1 class="section-title">About</h1>
-      <div class="about-body">
-        <p>About copy to follow.</p>
+      <div class="prose about-body">
+        <p>I always thought I would be an oil painter. It was my passion. It was my life. Music was always there too. First as a treble in the chamber choir, later as a bassist and backing vocalist in a band with some friends. But art was my future. Or so I thought.</p>
+        <p>After sixth form I went to art school, but music slowly took over. The band threw everything at it, playing our way around the Thames Valley music scene of the early 1990s. Painting had taken a back seat. Eventually reality caught up with us, and music became something I loved rather than something I could build a life around.</p>
+        <p>Along the way I had been working in kitchens, as a way of paying the rent and financing my musical ambitions. Starting out in the dish pit as a kitchen porter before moving to the other side of the counter, donning chef’s whites and honing my knife skills. Much more up my street. </p>
+        <p>When music looked like it was no longer a sensible career choice I doubled down on hospitality, mainly through lack of anything else to do, eventually finding myself managing restaurants. It was my first experience of leading people rather than simply doing the work myself—a lesson that would prove unexpectedly useful later.</p>
+        <p>Whilst food was, and still remains, a passion it wasn’t really what I wanted to do as a career. Unsure what came next, I did what countless young people before me had done: I moved to London, where the streets were supposedly paved with gold.</p>
+        <p>Then the web arrived at just the right moment.</p>
+        <p>Like many people in the mid-nineties, I had no idea what it would become. Unlike most people, I couldn’t stop pulling it apart to see how it worked.</p>
+        <p>That curiosity became Zelica, a small web design studio I founded with an old school friend. We were making it up as we went along, as was almost everyone else in those early days of the web. That eventually led me to larger agencies, bigger clients and, over the years, almost every discipline involved in making digital products.</p>
+        <hr/>
+        <p>Somewhere along the line I realised I was less interested in technology itself than in the act of making things.</p>
+        <p>Design, software engineering, typography, writing, food, photography, artificial intelligence.</p>
+        <p>A Thousand And One isn’t a business plan, though some of the things explored here may become businesses. It isn’t a technology blog, despite the amount of technology it may contain. It’s simply a place to follow my curiosity wherever it happens to lead. Sometimes that results in an essay, sometimes a product, sometimes an experiment that quietly fails. All of them begin with the same questions.</p>
+        <p>How does this work?</p>
+        <p>Why does it work?</p>
+        <p>Could it be better?</p>
       </div>
     </main>
     <SiteFoot />
