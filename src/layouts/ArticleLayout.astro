@@ -32,7 +32,14 @@ if (typeof entry.rendered?.html !== 'string') {
 const body = withEndMark(entry.rendered.html);
 ---
 
-<BlogShell title={`${data.title} — A Thousand And One`}>
+<BlogShell
+  title={data.title}
+  description={data.standfirst}
+  path={`/blog/${entry.id}/`}
+  ogType="article"
+  imagePath={data.image ? `/images/${data.image}` : undefined}
+  publishedTime={isoDay(data.date)}
+>
   <header class="article-bar">
     <a href="/blog/"
       ><img src="/blog/wordmark.png" alt="A Thousand And One" width="391" height="131" /></a

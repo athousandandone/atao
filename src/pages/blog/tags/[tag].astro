@@ -27,7 +27,11 @@ interface Props {
 const { name, entries } = Astro.props;
 ---
 
-<BlogShell title={`${name} — A Thousand And One`}>
+<BlogShell
+  title={name}
+  description={`Articles filed under ${name}, from A Thousand And One.`}
+  path={`/blog/tags/${Astro.params.tag}/`}
+>
   <div class="index-page">
     <Masthead />
     <main>

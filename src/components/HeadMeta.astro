@@ -1,0 +1,53 @@
+---
+// Head metadata (Slice 5): exactly the reviewed field list — the title
+// pattern, description, canonical, og:title, og:description, og:type,
+// og:url, og:site_name, article:published_time on articles — plus
+// og:image by the Editor's ruling (2026-07-28): the article's image
+// where one exists, /images/atao.png otherwise. Nothing else; any
+// addition (Twitter tags, JSON-LD, modified_time) is a reviewed change.
+import { origin, title as siteTitle } from '../site';
+
+interface Props {
+  /** Bare page name; the tab pattern "<name> — <site>" is applied here,
+   * except on the index, whose name is the site's. */
+  title: string;
+  description: string;
+  /** Site-relative canonical path in trailing-slash form; null on pages
+   * that must not claim a canonical URL (the 404). */
+  path: string | null;
+  ogType?: 'website' | 'article';
+  /** Site-relative image path for og:image. */
+  imagePath?: string;
+  /** ISO day (YYYY-MM-DD); articles only. */
+  publishedTime?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogType = 'website',
+  imagePath = '/images/atao.png',
+  publishedTime,
+} = Astro.props;
+
+const tabTitle = title === siteTitle ? siteTitle : `${title} — ${siteTitle}`;
+const canonical = path === null ? null : origin + path;
+---
+
+<title>{tabTitle}</title>
+<meta name="description" content={description} />
+{canonical && <link rel="canonical" href={canonical} />}
+{
+  canonical && (
+    <Fragment>
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:url" content={canonical} />
+      <meta property="og:site_name" content={siteTitle} />
+      <meta property="og:image" content={origin + imagePath} />
+    </Fragment>
+  )
+}
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
