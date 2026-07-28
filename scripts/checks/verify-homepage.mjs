@@ -24,10 +24,12 @@
 //
 // Approved additions (Slice 5.1, Editor's ruling 2026-07-28):
 //   E6  The section nav beneath the logotype (nav.home-nav) and the
-//       stylesheet Astro emits for it (an inlined <style>, or a <link>
-//       into /_astro/ above the inlining threshold). These nodes are
-//       pruned from the dist tree before comparison; everything else
-//       must still match site/. The nav's link targets are verified by
+//       stylesheet Astro emits for it: inlined, a <style> whose text
+//       names .home-nav; above the inlining threshold, a
+//       rel="stylesheet" <link> into /_astro/. Only these nodes are
+//       pruned from the dist tree before comparison — a stray style or
+//       non-stylesheet link still fails; everything else must still
+//       match site/. The nav's link targets are verified by
 //       verify:routes, not here.
 //
 // Byte identity of index.html is a migration aid, not the definition (§12).
@@ -114,17 +116,20 @@ function getDoctype(doc) {
   return (doc.childNodes ?? []).find((n) => n.nodeName === '#documentType');
 }
 
-/** E6: true for a normalised node the ruling permits dist to add. */
+/** E6: true for a normalised node the ruling permits dist to add — and
+ * nothing broader: an unrelated inline style or a non-stylesheet link
+ * must still fail the comparison. */
 function isApprovedAddition(node) {
   if (!node?.tag) return false;
-  if (node.tag === 'style') return true;
+  const attr = (name) => node.attrs.find(([n]) => n === name)?.[1];
+  if (node.tag === 'style') {
+    return node.children.some((c) => c.text?.includes('.home-nav'));
+  }
   if (node.tag === 'link') {
-    return node.attrs.some(([name, value]) => name === 'href' && value.startsWith('/_astro/'));
+    return attr('rel') === 'stylesheet' && (attr('href') ?? '').startsWith('/_astro/');
   }
   if (node.tag === 'nav') {
-    return node.attrs.some(
-      ([name, value]) => name === 'class' && value.split(/\s+/).includes('home-nav'),
-    );
+    return (attr('class') ?? '').split(/\s+/).includes('home-nav');
   }
   return false;
 }
