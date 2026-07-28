@@ -22,6 +22,14 @@
 //       whitespace-insensitive per §12.
 //   E5  The generated file has no trailing newline. Whitespace-only.
 //
+// Approved additions (Slice 5.1, Editor's ruling 2026-07-28):
+//   E6  The section nav beneath the logotype (nav.home-nav) and the
+//       stylesheet Astro emits for it (an inlined <style>, or a <link>
+//       into /_astro/ above the inlining threshold). These nodes are
+//       pruned from the dist tree before comparison; everything else
+//       must still match site/. The nav's link targets are verified by
+//       verify:routes, not here.
+//
 // Byte identity of index.html is a migration aid, not the definition (§12).
 
 import {
@@ -106,6 +114,29 @@ function getDoctype(doc) {
   return (doc.childNodes ?? []).find((n) => n.nodeName === '#documentType');
 }
 
+/** E6: true for a normalised node the ruling permits dist to add. */
+function isApprovedAddition(node) {
+  if (!node?.tag) return false;
+  if (node.tag === 'style') return true;
+  if (node.tag === 'link') {
+    return node.attrs.some(([name, value]) => name === 'href' && value.startsWith('/_astro/'));
+  }
+  if (node.tag === 'nav') {
+    return node.attrs.some(
+      ([name, value]) => name === 'class' && value.split(/\s+/).includes('home-nav'),
+    );
+  }
+  return false;
+}
+
+/** E6: strip approved additions from the dist tree before comparing. */
+function pruneApproved(node) {
+  const kids = node.document ?? node.children;
+  if (!kids) return node;
+  const filtered = kids.filter((c) => !isApprovedAddition(c)).map(pruneApproved);
+  return node.document ? { document: filtered } : { ...node, children: filtered };
+}
+
 export async function check() {
   const violations = [];
   const hint = 'the homepage must remain equivalent to site/; fix the port or the passthrough, never site/ itself (sanctioned homepage fixes land on main as ordinary reviewed changes).';
@@ -137,7 +168,7 @@ export async function check() {
   }
 
   const diffs = [];
-  compare(normalise(siteDoc), normalise(distDoc), 'document', diffs);
+  compare(normalise(siteDoc), pruneApproved(normalise(distDoc)), 'document', diffs);
   for (const d of diffs) {
     violations.push({
       file: `${DIST}/index.html`, line: 0,

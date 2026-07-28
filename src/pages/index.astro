@@ -1,3 +1,10 @@
+---
+// The homepage remains the preserved port of site/index.html; its one
+// approved addition (Slice 5.1, Editor's ruling 2026-07-28) is the
+// section nav beneath the logotype, styled by home.css alone.
+import '../styles/home.css';
+---
+
 <!-- @format -->
 
 <!doctype html>
@@ -26,6 +33,11 @@
   <body>
     <div id="root">
       <img src="./images/atao.svg" alt="A Thousand And One" />
+      <nav class="home-nav">
+        <a href="/blog/">The Blog</a>
+        <a href="/blog/archive/">Archive</a>
+        <a href="/about/">About</a>
+      </nav>
     </div>
   </body>
 </html>
