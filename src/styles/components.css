@@ -489,6 +489,9 @@
    language; serves misses site-wide, so no section chrome ---------- */
 
 .not-found {
+  /* Engines without svh support drop that declaration whole; the vh
+     line before it keeps full-height centring there. */
+  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
