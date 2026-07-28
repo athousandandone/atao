@@ -1,0 +1,8 @@
+# Deployment configuration (Slice 6 — the Netlify transition).
+# Publishes the generated site; every deploy re-runs the verification
+# suite, so an unverified build cannot publish. Node comes from .nvmrc.
+# Rollback paths are documented in README.md (Deployment).
+
+[build]
+  command = "npm run build && npm run verify"
+  publish = "dist"
