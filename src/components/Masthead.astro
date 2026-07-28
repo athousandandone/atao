@@ -1,0 +1,36 @@
+---
+// Index-family chrome (design 2a): dateline, centred wordmark, section
+// nav and the closing rule. Extracted from the index when the archive,
+// tag and about pages arrived (Slice 5) — one chrome, composed by every
+// index-family page. The nav lists only routes that exist.
+interface Props {
+  current?: 'blog' | 'archive' | 'about';
+}
+
+const { current } = Astro.props;
+const items = [
+  { key: 'blog', href: '/blog/', label: 'The Blog' },
+  { key: 'archive', href: '/blog/archive/', label: 'Archive' },
+  { key: 'about', href: '/blog/about/', label: 'About' },
+];
+---
+
+<header>
+  <p class="dateline">
+    <span>Est. MMXXVI</span>
+    <span>Everything is product</span>
+  </p>
+  <div class="masthead">
+    <img src="/blog/wordmark.png" alt="A Thousand And One" width="391" height="131" />
+    <nav>
+      {
+        items.map((item) => (
+          <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <hr class="masthead-rule" />
+</header>

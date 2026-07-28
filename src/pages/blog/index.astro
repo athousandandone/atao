@@ -2,10 +2,11 @@
 // /blog/ — the publication index, implementing approved design 2a.
 // Featured entry = the most recent article (Editor's ruling); the rest
 // fill the two-column grid. Entries come only through the structural
-// access helper, never getCollection directly. Nav carries "The Blog"
-// alone until the Archive and About routes exist (Slice 5).
+// access helper, never getCollection directly.
 import BlogShell from '../../layouts/BlogShell.astro';
 import EntryCard from '../../components/EntryCard.astro';
+import Masthead from '../../components/Masthead.astro';
+import SiteFoot from '../../components/SiteFoot.astro';
 import { getPublishedEntries } from '../../lib/content';
 import { formatDateShort, isoDay } from '../../lib/dates';
 
@@ -16,19 +17,7 @@ const featuredTag = featured?.data.tags?.[0];
 
 <BlogShell title="A Thousand And One">
   <div class="index-page">
-    <header>
-      <p class="dateline">
-        <span>Est. MMXXVI</span>
-        <span>Everything is product</span>
-      </p>
-      <div class="masthead">
-        <img src="/blog/wordmark.png" alt="A Thousand And One" width="391" height="131" />
-        <nav>
-          <a href="/blog/" aria-current="page">The Blog</a>
-        </nav>
-      </div>
-      <hr class="masthead-rule" />
-    </header>
+    <Masthead current="blog" />
     <main>
       {
         featured && (
@@ -68,9 +57,6 @@ const featuredTag = featured?.data.tags?.[0];
         {rest.map((entry) => <EntryCard entry={entry} />)}
       </div>
     </main>
-    <footer class="site-foot">
-      <img src="/blog/mi-plain.svg" alt="MI" width="30" height="30" />
-      <p>A Thousand And One · MMXXVI</p>
-    </footer>
+    <SiteFoot />
   </div>
 </BlogShell>
