@@ -9,13 +9,14 @@ import Masthead from '../../components/Masthead.astro';
 import SiteFoot from '../../components/SiteFoot.astro';
 import { getPublishedEntries } from '../../lib/content';
 import { formatDateShort, isoDay } from '../../lib/dates';
+import { title as siteTitle, description as siteDescription } from '../../site';
 
 const entries = await getPublishedEntries();
 const [featured, ...rest] = entries;
 const featuredTag = featured?.data.tags?.[0];
 ---
 
-<BlogShell title="A Thousand And One">
+<BlogShell title={siteTitle} description={siteDescription} path="/blog/">
   <div class="index-page">
     <Masthead current="blog" />
     <main>

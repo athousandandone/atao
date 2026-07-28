@@ -14,7 +14,8 @@
     "verify:js": "node scripts/checks/verify-js.mjs",
     "verify:self-contained": "node scripts/checks/verify-self-contained.mjs",
     "verify:homepage": "node scripts/checks/verify-homepage.mjs",
-    "verify:routes": "node scripts/checks/verify-routes.mjs"
+    "verify:routes": "node scripts/checks/verify-routes.mjs",
+    "verify:feeds": "node scripts/checks/verify-feeds.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

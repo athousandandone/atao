@@ -5,9 +5,10 @@
 import BlogShell from '../../layouts/BlogShell.astro';
 import Masthead from '../../components/Masthead.astro';
 import SiteFoot from '../../components/SiteFoot.astro';
+import { description as siteDescription } from '../../site';
 ---
 
-<BlogShell title="About — A Thousand And One">
+<BlogShell title="About" description={siteDescription} path="/blog/about/">
   <div class="index-page">
     <Masthead current="about" />
     <main class="about">

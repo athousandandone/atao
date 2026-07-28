@@ -1,20 +1,22 @@
-<!doctype html>
-<html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page not found — A Thousand And One</title>
-    <link rel="stylesheet" href="/app.css" />
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
-    <link rel="shortcut icon" href="/images/favicon.ico" />
-  </head>
-  <body>
-    <main>
-      <h1>Page not found</h1>
-      <p>
-        There is no page at this address.
-        <a href="/">Return to A Thousand And One</a>.
-      </p>
-    </main>
-  </body>
-</html>
+---
+// The 404, restyled into the blog's design language at Slice 5 (it was
+// a bare port of the hand-authored page until the design system
+// existed). It serves misses site-wide, so it carries no chrome tied to
+// a section — a centred statement, the routes that exist, the MI
+// device. No canonical or Open Graph URL: an error page has no
+// canonical address (path is null).
+import BlogShell from '../layouts/BlogShell.astro';
+---
+
+<BlogShell title="Page not found" description="There is no page at this address." path={null}>
+  <main class="not-found">
+    <p class="kicker">Page not found</p>
+    <h1>There is no page at this address.</h1>
+    <p class="return">
+      <a href="/">A Thousand And One</a>
+      · <a href="/blog/">The Blog</a>
+      · <a href="/blog/archive/">Archive</a>
+    </p>
+    <img src="/blog/mi-plain.svg" alt="" width="30" height="30" />
+  </main>
+</BlogShell>
