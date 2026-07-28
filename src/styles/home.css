@@ -1,0 +1,40 @@
+/* ============================================================
+   HOME — the root page's approved additions (Slice 5.1): the
+   section nav beneath the logotype. The page otherwise remains
+   the preserved port of site/index.html (verify:homepage, E6);
+   its palette and layout stay app.css's. Values mirror the
+   blog's masthead nav (components.css against tokens.css) as
+   literals — the homepage deliberately loads none of the blog's
+   stylesheets, and app.css itself must stay byte-identical to
+   site/app.css.
+   ============================================================ */
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* app.css centres #root's single child in a 90vh row; the column
+   direction seats the nav beneath the logotype instead. */
+#root {
+  flex-direction: column;
+}
+
+.home-nav {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  font: 400 11px / 1.4 'IBM Plex Mono', monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.home-nav a {
+  color: #7a7166;
+  text-decoration: none;
+}
+.home-nav a:hover {
+  color: #17130e;
+}
