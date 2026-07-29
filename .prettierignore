@@ -1,0 +1,19 @@
+# Preservation surfaces — byte-identity is verified; formatting must never
+# touch them.
+site/
+public/
+dist/
+.astro/
+
+# The preserved homepage: its emitted markup is compared against
+# site/index.html by verify:homepage, so its source is not reformatted.
+src/pages/index.astro
+
+# The visual source of truth and generated lockfile.
+design/
+package-lock.json
+
+# The Editor's prose and ruled text — changed by ruling, not by a save event.
+src/content/
+CLAUDE.md
+.claude/
