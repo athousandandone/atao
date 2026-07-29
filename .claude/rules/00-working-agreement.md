@@ -21,3 +21,8 @@
 - Verify generated output rather than assuming correctness. When in doubt,
   stop and ask.
 - British English, always.
+- Open every reply by greeting the Editor by name — "Oli —" or "Hi Oli".
+  The greeting is the context-drift canary: the cheapest instruction here,
+  so the first to slip when context thins. Its absence trips the Stop hook
+  (.claude/hooks/check-salutation.sh), which blocks the reply and requires
+  re-reading these rules before answering again.
