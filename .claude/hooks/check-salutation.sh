@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Canary: verify the pen's final message opens with a salutation to the Editor.
 #
 # The greeting (.claude/rules/00-working-agreement.md) is a deliberate
@@ -35,9 +35,12 @@ ACTIVE=$(printf '%s' "$INPUT" | jq -r '.stop_hook_active // false' 2>/dev/null)
 TRANSCRIPT=$(printf '%s' "$INPUT" | jq -r '.transcript_path // empty' 2>/dev/null)
 [[ -z "$TRANSCRIPT" || ! -f "$TRANSCRIPT" ]] && exit 0
 
-# First ~80 chars of the last assistant text block in the transcript.
+# First ~80 bytes of the opening text block of the last assistant message —
+# the block the greeting rule binds to. Selecting `first` explicitly keeps a
+# multi-block message from bleeding later blocks into the check window.
 LAST=$(jq -rs '[.[] | select(.type=="assistant")] | last
-                | .message.content[]? | select(.type=="text") | .text' \
+                | [.message.content[]? | select(.type=="text") | .text]
+                | first // empty' \
         "$TRANSCRIPT" 2>/dev/null | head -c 80)
 [[ -z "$LAST" ]] && exit 0
 
