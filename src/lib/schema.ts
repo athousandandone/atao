@@ -30,7 +30,7 @@ export const blogSchema = z.object({
       .string()
       .regex(/^\d{4}-\d{2}-\d{2}$/, "date must be authored as YYYY-MM-DD")
       .refine(isRealCalendarDate, "date is not a real calendar date")
-      .transform((value) => new Date(`${value}T00:00:00Z`)),
+      .transform(value => new Date(`${value}T00:00:00Z`))
   ]),
   // Optional: a short observation may need no classification. Tag pages
   // derive only from tagged articles; display case is stored here.
@@ -38,7 +38,7 @@ export const blogSchema = z.object({
   // Workflow safety from day one: drafts never reach any output.
   draft: z.boolean().default(false),
   image: z.string().min(1).optional(),
-  imageAlt: z.string().min(1).optional(),
+  imageAlt: z.string().min(1).optional()
 });
 
 export type BlogData = z.infer<typeof blogSchema>;

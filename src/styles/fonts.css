@@ -6,52 +6,56 @@
    No preloads: a decision deferred to measured behaviour (§8). */
 
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('/fonts/cormorant-garamond/CormorantGaramond-Regular.woff2') format('woff2');
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-garamond/CormorantGaramond-Regular.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('/fonts/cormorant-garamond/CormorantGaramond-Medium.woff2') format('woff2');
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-garamond/CormorantGaramond-Medium.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  src: url('/fonts/cormorant-garamond/CormorantGaramond-Italic.woff2') format('woff2');
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-garamond/CormorantGaramond-Italic.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'EB Garamond';
-  src: url('/fonts/eb-garamond/EBGaramond-Variable.woff2') format('woff2');
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond/EBGaramond-Variable.woff2") format("woff2");
   font-weight: 400 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'EB Garamond';
-  src: url('/fonts/eb-garamond/EBGaramond-Italic-Variable.woff2') format('woff2');
+  font-family: "EB Garamond";
+  src: url("/fonts/eb-garamond/EBGaramond-Italic-Variable.woff2")
+    format("woff2");
   font-weight: 400 500;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2') format('woff2');
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;

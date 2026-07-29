@@ -2,18 +2,18 @@
 // Date instances (schema.ts); the UTC time zone here pins the displayed
 // day against local-zone drift. en-GB throughout.
 
-const SHORT = new Intl.DateTimeFormat('en-GB', {
-  day: '2-digit',
-  month: 'short',
-  year: 'numeric',
-  timeZone: 'UTC',
+const SHORT = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC"
 });
 
-const LONG = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
+const LONG = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC"
 });
 
 /** Card and kicker form: "09 Jun 2026". */
