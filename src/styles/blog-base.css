@@ -27,7 +27,14 @@ a:hover {
 /* The publication uses weights 400/500 only; browsers must not synthesise
    a 700 on unstyled headings or strong text. Specific treatments in
    prose.css and (from Slice 4) components.css override as designed. */
-h1, h2, h3, h4, h5, h6, b, strong {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong {
   font-weight: 500;
 }
 

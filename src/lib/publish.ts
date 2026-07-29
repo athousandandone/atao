@@ -19,7 +19,11 @@ interface OrderFields {
  * exists, so a future-dated article appears on the next production build
  * after its date.
  */
-export function isPublished(data: PublishFields, now: Date, prod: boolean): boolean {
+export function isPublished(
+  data: PublishFields,
+  now: Date,
+  prod: boolean
+): boolean {
   if (data.draft) return false;
   if (prod && data.date.getTime() > now.getTime()) return false;
   return true;
@@ -40,12 +44,12 @@ export function compareEntries(a: OrderFields, b: OrderFields): number {
  */
 export function adjacentEntries<T extends { id: string }>(
   ordered: T[],
-  id: string,
+  id: string
 ): { newer: T | null; older: T | null } {
-  const index = ordered.findIndex((entry) => entry.id === id);
+  const index = ordered.findIndex(entry => entry.id === id);
   if (index === -1) return { newer: null, older: null };
   return {
     newer: ordered[index - 1] ?? null,
-    older: ordered[index + 1] ?? null,
+    older: ordered[index + 1] ?? null
   };
 }

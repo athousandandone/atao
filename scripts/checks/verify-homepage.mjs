@@ -40,14 +40,16 @@ import {
   isElement,
   listFiles,
   parseHtmlFile,
-  runAsMain,
-} from './lib.mjs';
-import { existsSync, readFileSync } from 'node:fs';
+  runAsMain
+} from "./lib.mjs";
+import { existsSync, readFileSync } from "node:fs";
 
-const PASSTHROUGH = ['app.css', 'site.webmanifest'];
+const PASSTHROUGH = ["app.css", "site.webmanifest"];
 
 function bytesEqual(a, b) {
-  return existsSync(a) && existsSync(b) && readFileSync(a).equals(readFileSync(b));
+  return (
+    existsSync(a) && existsSync(b) && readFileSync(a).equals(readFileSync(b))
+  );
 }
 
 /**
@@ -56,41 +58,44 @@ function bytesEqual(a, b) {
  * nodes are dropped (E4); doctype nodes are handled separately (E1).
  */
 function normalise(node) {
-  if (node.nodeName === '#text') {
-    const text = node.value.replace(/\s+/g, ' ').trim();
+  if (node.nodeName === "#text") {
+    const text = node.value.replace(/\s+/g, " ").trim();
     return text ? { text } : null;
   }
-  if (node.nodeName === '#comment') {
+  if (node.nodeName === "#comment") {
     return { comment: node.data.trim() };
   }
-  if (isElement(node) || node.nodeName === '#document') {
+  if (isElement(node) || node.nodeName === "#document") {
     const children = (node.childNodes ?? [])
-      .filter((c) => c.nodeName !== '#documentType')
+      .filter(c => c.nodeName !== "#documentType")
       .map(normalise)
       .filter(Boolean);
-    if (node.nodeName === '#document') return { document: children };
+    if (node.nodeName === "#document") return { document: children };
     return {
       tag: node.tagName.toLowerCase(),
       attrs: (node.attrs ?? [])
-        .map((a) => [a.name.toLowerCase(), a.value])
+        .map(a => [a.name.toLowerCase(), a.value])
         .sort((x, y) => (x[0] < y[0] ? -1 : 1)),
-      children,
+      children
     };
   }
   return null;
 }
 
 function describe(node) {
-  if (!node) return '(absent)';
+  if (!node) return "(absent)";
   if (node.text !== undefined) return `text "${node.text.slice(0, 60)}"`;
-  if (node.comment !== undefined) return `comment "${node.comment.slice(0, 60)}"`;
-  if (node.tag) return `<${node.tag}${node.attrs.map(([n, v]) => ` ${n}="${v}"`).join('')}>`;
-  return 'document';
+  if (node.comment !== undefined)
+    return `comment "${node.comment.slice(0, 60)}"`;
+  if (node.tag)
+    return `<${node.tag}${node.attrs.map(([n, v]) => ` ${n}="${v}"`).join("")}>`;
+  return "document";
 }
 
 function compare(a, b, path, diffs) {
   if (!a || !b || JSON.stringify(a) === JSON.stringify(b)) {
-    if ((a === null) !== (b === null)) diffs.push({ path, a: describe(a), b: describe(b) });
+    if ((a === null) !== (b === null))
+      diffs.push({ path, a: describe(a), b: describe(b) });
     return;
   }
   const aKids = a.document ?? a.children ?? [];
@@ -105,7 +110,11 @@ function compare(a, b, path, diffs) {
   for (let i = 0; i < max; i++) {
     const childPath = `${path} > ${describe(aKids[i] ?? bKids[i])}[${i}]`;
     if (!aKids[i] || !bKids[i]) {
-      diffs.push({ path: childPath, a: describe(aKids[i]), b: describe(bKids[i]) });
+      diffs.push({
+        path: childPath,
+        a: describe(aKids[i]),
+        b: describe(bKids[i])
+      });
     } else {
       compare(aKids[i], bKids[i], childPath, diffs);
     }
@@ -113,7 +122,7 @@ function compare(a, b, path, diffs) {
 }
 
 function getDoctype(doc) {
-  return (doc.childNodes ?? []).find((n) => n.nodeName === '#documentType');
+  return (doc.childNodes ?? []).find(n => n.nodeName === "#documentType");
 }
 
 /** E6: true for a normalised node the ruling permits dist to add — and
@@ -121,15 +130,18 @@ function getDoctype(doc) {
  * must still fail the comparison. */
 function isApprovedAddition(node) {
   if (!node?.tag) return false;
-  const attr = (name) => node.attrs.find(([n]) => n === name)?.[1];
-  if (node.tag === 'style') {
-    return node.children.some((c) => c.text?.includes('.home-nav'));
+  const attr = name => node.attrs.find(([n]) => n === name)?.[1];
+  if (node.tag === "style") {
+    return node.children.some(c => c.text?.includes(".home-nav"));
   }
-  if (node.tag === 'link') {
-    return attr('rel') === 'stylesheet' && (attr('href') ?? '').startsWith('/_astro/');
+  if (node.tag === "link") {
+    return (
+      attr("rel") === "stylesheet" &&
+      (attr("href") ?? "").startsWith("/_astro/")
+    );
   }
-  if (node.tag === 'nav') {
-    return (attr('class') ?? '').split(/\s+/).includes('home-nav');
+  if (node.tag === "nav") {
+    return (attr("class") ?? "").split(/\s+/).includes("home-nav");
   }
   return false;
 }
@@ -138,23 +150,34 @@ function isApprovedAddition(node) {
 function pruneApproved(node) {
   const kids = node.document ?? node.children;
   if (!kids) return node;
-  const filtered = kids.filter((c) => !isApprovedAddition(c)).map(pruneApproved);
-  return node.document ? { document: filtered } : { ...node, children: filtered };
+  const filtered = kids.filter(c => !isApprovedAddition(c)).map(pruneApproved);
+  return node.document
+    ? { document: filtered }
+    : { ...node, children: filtered };
 }
 
 export async function check() {
   const violations = [];
-  const hint = 'the homepage must remain equivalent to site/; fix the port or the passthrough, never site/ itself (sanctioned homepage fixes land on main as ordinary reviewed changes).';
+  const hint =
+    "the homepage must remain equivalent to site/; fix the port or the passthrough, never site/ itself (sanctioned homepage fixes land on main as ordinary reviewed changes).";
 
   // 1. Passthrough byte identity.
-  const images = listFiles(`${SITE}/images`).filter((f) => !f.split('/').pop().startsWith('.'));
+  const images = listFiles(`${SITE}/images`).filter(
+    f => !f.split("/").pop().startsWith(".")
+  );
   const pairs = [
-    ...PASSTHROUGH.map((f) => [`${SITE}/${f}`, `${DIST}/${f}`]),
-    ...images.map((f) => [`${SITE}/images/${f}`, `${DIST}/images/${f}`]),
+    ...PASSTHROUGH.map(f => [`${SITE}/${f}`, `${DIST}/${f}`]),
+    ...images.map(f => [`${SITE}/images/${f}`, `${DIST}/images/${f}`])
   ];
   for (const [src, out] of pairs) {
     if (!bytesEqual(src, out)) {
-      violations.push({ file: out, line: 0, pattern: `passthrough file not byte-identical to ${src}`, excerpt: '', hint });
+      violations.push({
+        file: out,
+        line: 0,
+        pattern: `passthrough file not byte-identical to ${src}`,
+        excerpt: "",
+        hint
+      });
     }
   }
 
@@ -164,26 +187,38 @@ export async function check() {
 
   const siteDt = getDoctype(siteDoc);
   const distDt = getDoctype(distDoc);
-  if (!siteDt || !distDt || siteDt.name.toLowerCase() !== distDt.name.toLowerCase()) {
+  if (
+    !siteDt ||
+    !distDt ||
+    siteDt.name.toLowerCase() !== distDt.name.toLowerCase()
+  ) {
     violations.push({
-      file: `${DIST}/index.html`, line: 1,
-      pattern: `doctype mismatch (site: ${siteDt?.name ?? 'none'}, dist: ${distDt?.name ?? 'none'})`,
-      excerpt: '', hint,
+      file: `${DIST}/index.html`,
+      line: 1,
+      pattern: `doctype mismatch (site: ${siteDt?.name ?? "none"}, dist: ${distDt?.name ?? "none"})`,
+      excerpt: "",
+      hint
     });
   }
 
   const diffs = [];
-  compare(normalise(siteDoc), pruneApproved(normalise(distDoc)), 'document', diffs);
+  compare(
+    normalise(siteDoc),
+    pruneApproved(normalise(distDoc)),
+    "document",
+    diffs
+  );
   for (const d of diffs) {
     violations.push({
-      file: `${DIST}/index.html`, line: 0,
+      file: `${DIST}/index.html`,
+      line: 0,
       pattern: `structural difference at ${d.path}`,
       excerpt: `site: ${d.a} | dist: ${d.b}`,
-      hint,
+      hint
     });
   }
 
   return { violations, advisories: [] };
 }
 
-runAsMain(import.meta.url, 'verify:homepage', check);
+runAsMain(import.meta.url, "verify:homepage", check);

@@ -15,8 +15,12 @@
   max-width: var(--measure);
   text-wrap: pretty;
 }
-.prose p { margin: var(--space-para) 0 0; }
-.prose > p:first-child { margin-top: 0; }
+.prose p {
+  margin: var(--space-para) 0 0;
+}
+.prose > p:first-child {
+  margin-top: 0;
+}
 
 /* Drop cap on the opening paragraph */
 .prose > p:first-of-type::first-letter {
@@ -33,7 +37,8 @@
    inconsistent with itself. */
 .prose h2 {
   margin: var(--space-section) 0 0;
-  font: var(--weight-display) var(--size-h2) / var(--leading-heading) var(--font-display);
+  font: var(--weight-display) var(--size-h2) / var(--leading-heading)
+    var(--font-display);
   color: var(--text-heading);
 }
 .prose h3 {
@@ -43,7 +48,10 @@
   text-transform: uppercase;
   color: var(--text-heading);
 }
-.prose h2 + p, .prose h3 + p { margin-top: 20px; }
+.prose h2 + p,
+.prose h3 + p {
+  margin-top: 20px;
+}
 
 /* Pull quotes (rendered 2b borders 0.25 agree with --hairline-strong) */
 .prose blockquote {
@@ -55,10 +63,15 @@
   font: italic 400 var(--size-pull) / 1.3 var(--font-display);
   color: var(--text-heading);
 }
-.prose blockquote p { margin: 0; font: inherit; }
+.prose blockquote p {
+  margin: 0;
+  font: inherit;
+}
 
 /* Figures: images, diagrams. Add class="breakout" for the wide variant. */
-.prose figure { margin: 56px 0 0; }
+.prose figure {
+  margin: 56px 0 0;
+}
 .prose figure.breakout {
   width: var(--measure-wide);
   margin-left: calc((var(--measure-wide) - var(--measure)) / -2);
@@ -66,9 +79,15 @@
 /* Fluid fallback (new design work): once the viewport cannot hold the
    860px breakout beside its padding, it returns to the column. */
 @media (max-width: 960px) {
-  .prose figure.breakout { width: auto; margin-left: 0; }
+  .prose figure.breakout {
+    width: auto;
+    margin-left: 0;
+  }
 }
-.prose img { display: block; max-width: 100%; }
+.prose img {
+  display: block;
+  max-width: 100%;
+}
 .prose figcaption {
   margin-top: 12px;
   text-align: center;
@@ -89,7 +108,9 @@
 .prose pre code {
   font: 400 var(--size-code) / 1.65 var(--font-mono);
   color: #3d372c; /* D7 */
-  background: none; border: 0; padding: 0;
+  background: none;
+  border: 0;
+  padding: 0;
 }
 .prose :not(pre) > code {
   font: 400 0.78em var(--font-mono);
@@ -101,18 +122,27 @@
 /* Tables.
    D3: row hairlines are the rendered 0.1, not --hairline (0.12);
    the header rule (solid ink) agrees with --rule. */
-.prose table { margin: 18px 0 0; width: 100%; border-collapse: collapse; }
+.prose table {
+  margin: 18px 0 0;
+  width: 100%;
+  border-collapse: collapse;
+}
 .prose caption {
-  caption-side: top; text-align: left; padding-bottom: 12px;
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 12px;
   font: 500 12px / 1.4 var(--font-mono);
-  letter-spacing: var(--track-label); text-transform: uppercase;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
   color: var(--text-heading);
 }
 .prose th {
-  text-align: left; padding: 10px 0;
+  text-align: left;
+  padding: 10px 0;
   border-bottom: 1px solid var(--rule);
   font: 500 var(--size-meta) / 1.4 var(--font-mono);
-  letter-spacing: var(--track-meta); text-transform: uppercase;
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
   color: var(--text-meta);
 }
 .prose td {
@@ -120,15 +150,22 @@
   border-bottom: 1px solid rgba(23, 19, 14, 0.1); /* D3 */
   font-size: var(--size-excerpt);
 }
-.prose th:not(:first-child), .prose td:not(:first-child) { text-align: right; }
-.prose td:not(:first-child) { font: 400 13px var(--font-mono); color: var(--text-secondary); }
+.prose th:not(:first-child),
+.prose td:not(:first-child) {
+  text-align: right;
+}
+.prose td:not(:first-child) {
+  font: 400 13px var(--font-mono);
+  color: var(--text-secondary);
+}
 
 /* Definition lists — ingredient lists, spec sheets.
    D1: top rule is the rendered 0.2, not --hairline-strong (0.25).
    D2: row hairlines are the rendered 0.1, not --hairline (0.12). */
 .prose dl {
   margin: 18px 0 0;
-  display: grid; grid-template-columns: 1fr auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
   border-top: 1px solid rgba(23, 19, 14, 0.2); /* D1 */
 }
 .prose dt {
@@ -137,7 +174,8 @@
   font-size: 18px;
 }
 .prose dd {
-  margin: 0; padding: 11px 0;
+  margin: 0;
+  padding: 11px 0;
   border-bottom: 1px solid rgba(23, 19, 14, 0.1); /* D2 */
   /* The export centres the shorter dd box itself (align-self: center),
      which drops its hairline out of line with the dt's — visibly broken
@@ -146,22 +184,36 @@
      and the value text centres within it. */
   display: flex;
   align-items: center;
-  font: 400 13px var(--font-mono); color: var(--text-secondary);
+  font: 400 13px var(--font-mono);
+  color: var(--text-secondary);
 }
 
 /* Lists */
-.prose ol, .prose ul { margin: 18px 0 0; padding-left: 34px; font-size: var(--size-list); line-height: 1.6; }
-.prose ul { padding-left: 26px; }
-.prose li { padding-left: 8px; }
-.prose li + li { margin-top: 14px; }
+.prose ol,
+.prose ul {
+  margin: 18px 0 0;
+  padding-left: 34px;
+  font-size: var(--size-list);
+  line-height: 1.6;
+}
+.prose ul {
+  padding-left: 26px;
+}
+.prose li {
+  padding-left: 8px;
+}
+.prose li + li {
+  margin-top: 14px;
+}
 
 /* Collapsible asides.
    D4: borders are the rendered 0.2, not --hairline-strong (0.25).
    D8: body text ink is the rendered #3d372c, not --text-secondary.
    D11: list items inside details sit tighter (rendered 8px, not 14px). */
 .prose details {
-  margin: 44px 0 0; padding: 18px 4px;
-  border-top: 1px solid rgba(23, 19, 14, 0.2);    /* D4 */
+  margin: 44px 0 0;
+  padding: 18px 4px;
+  border-top: 1px solid rgba(23, 19, 14, 0.2); /* D4 */
   border-bottom: 1px solid rgba(23, 19, 14, 0.2); /* D4 */
 }
 .prose summary {
@@ -170,11 +222,16 @@
   color: var(--text-heading);
 }
 .prose details > *:not(summary) {
-  font-size: 17.5px; line-height: 1.65;
+  font-size: 17.5px;
+  line-height: 1.65;
   color: #3d372c; /* D8 */
 }
-.prose details p { margin-top: 16px; }
-.prose details li + li { margin-top: 8px; } /* D11 */
+.prose details p {
+  margin-top: 16px;
+}
+.prose details li + li {
+  margin-top: 8px;
+} /* D11 */
 
 /* Sidenotes — margin notes. Requires room to the right of the column
    (article composition, Slice 4). Falls back inline ≤1200px.
@@ -192,12 +249,22 @@
    review ruling) a floated note reaches 255px past the content edge,
    which a viewport below ~1200px cannot hold without overflow. */
 @media (max-width: 1200px) {
-  .prose aside { float: none; width: auto; margin: 26px 0 0; padding: 10px 0 0; }
+  .prose aside {
+    float: none;
+    width: auto;
+    margin: 26px 0 0;
+    padding: 10px 0 0;
+  }
 }
 
 /* Footnote references */
-.prose sup { font-size: 12px; line-height: 0; }
-.prose sup a { font-family: var(--font-mono); }
+.prose sup {
+  font-size: 12px;
+  line-height: 0;
+}
+.prose sup a {
+  font-family: var(--font-mono);
+}
 
 /* The MI end-mark, inserted by the build between essay text and the
    footnote apparatus (src/lib/end-mark.mjs) — article composition. */
@@ -228,7 +295,9 @@
   letter-spacing: 1.2em; /* D9 */
   color: var(--text-meta);
 }
-.prose hr + h2 { margin-top: 0; } /* D12 */
+.prose hr + h2 {
+  margin-top: 0;
+} /* D12 */
 
 /* Footnotes block — selectors match the Sätteri emission record:
    <section data-footnotes class="footnotes"> with an h2 the generator
@@ -237,19 +306,32 @@
    hiding utility is defined (a decision recorded in the slice PR).
    D5: the top rule is the rendered 0.2, not --hairline-strong (0.25). */
 .prose .footnotes {
-  margin-top: 56px; padding-top: 24px;
+  margin-top: 56px;
+  padding-top: 24px;
   border-top: 1px solid rgba(23, 19, 14, 0.2); /* D5 */
 }
-.prose .footnotes h2, .prose .footnotes h3 {
+.prose .footnotes h2,
+.prose .footnotes h3 {
   margin: 0;
   font: 500 var(--size-meta) / 1.4 var(--font-mono);
-  letter-spacing: var(--track-label); text-transform: uppercase;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
   color: var(--text-meta);
 }
 .prose .footnotes ol {
-  margin: 16px 0 0; padding-left: 22px;
-  font-size: var(--size-footnote); line-height: 1.55; color: var(--text-secondary);
+  margin: 16px 0 0;
+  padding-left: 22px;
+  font-size: var(--size-footnote);
+  line-height: 1.55;
+  color: var(--text-secondary);
 }
-.prose .footnotes li { padding-left: 6px; }
-.prose .footnotes li + li { margin-top: 10px; }
-.prose .footnotes a { font-family: var(--font-mono); font-size: 12px; }
+.prose .footnotes li {
+  padding-left: 6px;
+}
+.prose .footnotes li + li {
+  margin-top: 10px;
+}
+.prose .footnotes a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}

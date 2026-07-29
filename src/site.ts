@@ -7,8 +7,8 @@
 // transition (Slice 6) switches the published directory to dist/ —
 // no DNS change is involved.
 
-export const byline = 'Oliver Matthews';
-export const title = 'A Thousand And One';
-export const origin = 'https://athousandandone.co.uk';
+export const byline = "Oliver Matthews";
+export const title = "A Thousand And One";
+export const origin = "https://athousandandone.co.uk";
 export const description =
-  'Essays on the craft of making things — software, food, music and more. Everything is product.';
+  "Essays on the craft of making things — software, food, music and more. Everything is product.";

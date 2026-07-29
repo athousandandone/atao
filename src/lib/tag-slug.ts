@@ -9,13 +9,15 @@
  * is a content defect, so it throws rather than yielding an empty slug. */
 export function tagSlug(name: string): string {
   const slug = name
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  if (slug === '') {
-    throw new Error(`tag "${name}" yields an empty slug and cannot form a route`);
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (slug === "") {
+    throw new Error(
+      `tag "${name}" yields an empty slug and cannot form a route`
+    );
   }
   return slug;
 }
@@ -30,7 +32,7 @@ export interface TagGroup<T> {
  * unrelated tags into one route silently — that is a build defect, so a
  * collision throws with both names. */
 export function tagsBySlug<T extends { data: { tags?: string[] } }>(
-  entries: T[],
+  entries: T[]
 ): Map<string, TagGroup<T>> {
   const groups = new Map<string, TagGroup<T>>();
   for (const entry of entries) {
@@ -41,7 +43,7 @@ export function tagsBySlug<T extends { data: { tags?: string[] } }>(
         groups.set(slug, { name, entries: [entry] });
       } else if (group.name !== name) {
         throw new Error(
-          `tag slug collision: "${group.name}" and "${name}" both slug to "${slug}"`,
+          `tag slug collision: "${group.name}" and "${name}" both slug to "${slug}"`
         );
       } else {
         group.entries.push(entry);
